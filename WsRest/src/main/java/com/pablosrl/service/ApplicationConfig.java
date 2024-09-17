@@ -27,8 +27,8 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         /*resources.add(com.pablosrl.service.WsAlerta.class);*/
         
-        resources.add(com.pablosrl.service.WsUsuario.class);
-        resources.add(com.pablosrl.service.ExampleService.class);
+        resources.add(com.pablosrl.controllers.WsUsuario.class);
+        resources.add(com.pablosrl.controllers.ExampleService.class);
         
         
         
