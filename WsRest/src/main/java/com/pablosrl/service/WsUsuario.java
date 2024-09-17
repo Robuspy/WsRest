@@ -38,31 +38,15 @@ public class WsUsuario {
         List<Usuarios> usuarioList = new ArrayList<>();
         String where = " where cod_usuario = '" + codigo + "'";
         String sql = consulta() + where ;
-        System.out.println("consulta " + sql);
+        System.out.println("Consulta " + sql);
         try {
             ResultSet rs = AppUtils.realizaConsulta(sql);
             while (rs.next()) {
-                c = new Usuarios();
-                c.setCodUsuario(rs.getString(1));
-                c.setSucursal(rs.getString(2));
+            	c = new Usuarios();
+                c.setCodPersona(rs.getString(1));
+                c.setCodUsuario(rs.getString(2));
                 c.setNombre(rs.getString(3));
-                c.setCodCobrador(rs.getString(4));
-                c.setCodVendedor(rs.getString(5));
-                c.setSeriePedido(rs.getString(6));
-                c.setSerieFco(rs.getString(7));
-                c.setSerieNcr(rs.getString(8));
-                c.setNroPedido(rs.getString(9));
-                c.setNroContado(rs.getString(10));
-                c.setNroNcr(rs.getString(11));
-                c.setCanal(rs.getString(12));
-                c.setCodEmpresa(rs.getString(13));
-                c.setNombreEmpresa(rs.getString(14));
-                c.setRucEmpresa(rs.getString(15));
-                c.setDireccion(rs.getString(16));
-                c.setTimbrado(rs.getString(17));
-                c.setFecInicio(rs.getString(18));
-                c.setFecFin(rs.getString(19));
-                c.setSerieLegal(rs.getString(20));
+                c.setCodGrupo(rs.getString(4));
                 usuarioList.add(c);
             }
 
@@ -89,27 +73,11 @@ public class WsUsuario {
         try {
             ResultSet rs = AppUtils.realizaConsulta(sql);
             while (rs.next()) {
-                c = new Usuarios();
-                c.setCodUsuario(rs.getString(1));
-                c.setSucursal(rs.getString(2));
+            	c = new Usuarios();
+                c.setCodPersona(rs.getString(1));
+                c.setCodUsuario(rs.getString(2));
                 c.setNombre(rs.getString(3));
-                c.setCodCobrador(rs.getString(4));
-                c.setCodVendedor(rs.getString(5));
-                c.setSeriePedido(rs.getString(6));
-                c.setSerieFco(rs.getString(7));
-                c.setSerieNcr(rs.getString(8));
-                c.setNroPedido(rs.getString(9));
-                c.setNroContado(rs.getString(10));
-                c.setNroNcr(rs.getString(11));
-                c.setCanal(rs.getString(12));
-                c.setCodEmpresa(rs.getString(13));
-                c.setNombreEmpresa(rs.getString(14));
-                c.setRucEmpresa(rs.getString(15));
-                c.setDireccion(rs.getString(16));
-                c.setTimbrado(rs.getString(17));
-                c.setFecInicio(rs.getString(18));
-                c.setFecFin(rs.getString(19));
-                c.setSerieLegal(rs.getString(20));
+                c.setCodGrupo(rs.getString(4));
                 usuarioList.add(c);
             }
 
@@ -138,27 +106,15 @@ public class WsUsuario {
     }
 
     public String consulta() {
-        return("	SELECT cod_usuario, " +
-                "	   cod_sucursal, " +
-                "	   nombre, " +
-                " 	   cod_cobrador," +
-                " 	   cod_vendedor, " +
-                " 	   serie_pedido, " +
-                " 	   serie_fco, " +
-                " 	   serie_ncr, " +
-                " 	   nro_pedido," +
-                "        nro_contado, " +
-                " 	   nro_ncr,  " +
-                " 	   canal_vendedor, " +
-                " 	   cod_empresa, " +
-                " 	   nombre_empresa, " +
-                "        ruc_empresa," +
-                " 	   direccion," +
-                " 	   timbrado," +
-                " 	   fec_inicio, " +
-                " 	   fec_fin,    " +
-                " 	   serie_legal " +
-                "   FROM WSV_USUARIOS ");
+    	return (
+                "   SELECT u.cod_persona, " +
+                "          u.cod_usuario, " +
+                "          per.nombre AS desc_persona, " +
+                "          u.cod_grupo " +
+                "   FROM usuarios u " +
+                "   JOIN personas per ON u.cod_persona = per.cod_persona " +
+                "   AND u.cod_empresa = 1"
+            );
     }
 }
 

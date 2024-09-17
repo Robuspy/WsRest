@@ -27,8 +27,8 @@ public class AppUtils {
     public static final String IMAGE_DIRECTORY = "\\\\192.168.100.225\\fotos_articulos\\"; //prueba local casa robus
     //public static final String IMAGE_DIRECTORY = "\\\\\\\\192.168.0.56\\\\inventiva\\\\INVENTIVA\\\\EXE\\\\FOTOS_ARTICULOS\\\\";
 
-    private static final String DATABASE_USER = "wsinv";
-    private static final String DATABASE_PASS = "wsinv";
+    private static final String DATABASE_USER = "inv";
+    private static final String DATABASE_PASS = "inv";
 
     private static Connection con;
     private static Statement stmt;
