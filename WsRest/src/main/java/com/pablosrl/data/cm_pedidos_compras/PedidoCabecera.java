@@ -8,18 +8,18 @@ public class PedidoCabecera {
 	private String codEmpresa;
     private String tipComprobante;
     private String serComprobante;
-    private String nroComprobante;
+    private int nroComprobante;  // NUMBER(8)
     private String codSucursal;
     private Date fecComprobante;
     private String codProveedor;
     private String codCondicionCompra;
-    private double totComprobante;
-    private double totGravadas;
-    private double totExentas;
-    private double totIva;
-    private double descuento;
+    private BigDecimal totComprobante;  // NUMBER(18,3)
+    private BigDecimal totGravadas;
+    private BigDecimal totExentas;
+    private BigDecimal totIva;
+    private BigDecimal descuento;
     private String codMoneda;
-    private double tipCambio;
+    private BigDecimal tipCambio;
     private String verificadora;
     private String transporte;
     private String via;
@@ -29,27 +29,23 @@ public class PedidoCabecera {
     private Date fecEstado;
     private String codUsuario;
     private Date fecAlta;
-    private boolean anulado;
-    private double cambioMonedaPrecio;
+    private boolean anulado;  // VARCHAR2(1) interpretado como boolean
+    private BigDecimal cambioMonedaPrecio;  // NUMBER(9,4)
     private String tipComprobanteRef;
     private String serComprobanteRef;
-    private String nroComprobanteRef;
+    private int nroComprobanteRef;  // NUMBER(8)
     private String referencia;
-    private boolean indIvaIncluido;
-    private double totalPeso;
+    private boolean indIvaIncluido;  // VARCHAR2(1) interpretado como boolean
+    private BigDecimal totalPeso;  // NUMBER
     private String codTecnico;
-    private boolean indRecibido;
+    private boolean indRecibido;  // VARCHAR2(1) interpretado como boolean
     private String deposito;
     private Date fecLlegada;
     private String codSucursalPed;
     private String descSucursalPed;
     private String entrega;
     private String etiqueta;
-    private double costoEtiqueta;
-    
-    
-    
-    
+    private BigDecimal costoEtiqueta;  // NUMBER(10,3)
 	public String getCodEmpresa() {
 		return codEmpresa;
 	}
@@ -68,10 +64,10 @@ public class PedidoCabecera {
 	public void setSerComprobante(String serComprobante) {
 		this.serComprobante = serComprobante;
 	}
-	public String getNroComprobante() {
+	public int getNroComprobante() {
 		return nroComprobante;
 	}
-	public void setNroComprobante(String nroComprobante) {
+	public void setNroComprobante(int nroComprobante) {
 		this.nroComprobante = nroComprobante;
 	}
 	public String getCodSucursal() {
@@ -98,34 +94,34 @@ public class PedidoCabecera {
 	public void setCodCondicionCompra(String codCondicionCompra) {
 		this.codCondicionCompra = codCondicionCompra;
 	}
-	public double getTotComprobante() {
+	public BigDecimal getTotComprobante() {
 		return totComprobante;
 	}
-	public void setTotComprobante(double totComprobante) {
+	public void setTotComprobante(BigDecimal totComprobante) {
 		this.totComprobante = totComprobante;
 	}
-	public double getTotGravadas() {
+	public BigDecimal getTotGravadas() {
 		return totGravadas;
 	}
-	public void setTotGravadas(double totGravadas) {
+	public void setTotGravadas(BigDecimal totGravadas) {
 		this.totGravadas = totGravadas;
 	}
-	public double getTotExentas() {
+	public BigDecimal getTotExentas() {
 		return totExentas;
 	}
-	public void setTotExentas(double totExentas) {
+	public void setTotExentas(BigDecimal totExentas) {
 		this.totExentas = totExentas;
 	}
-	public double getTotIva() {
+	public BigDecimal getTotIva() {
 		return totIva;
 	}
-	public void setTotIva(double totIva) {
+	public void setTotIva(BigDecimal totIva) {
 		this.totIva = totIva;
 	}
-	public double getDescuento() {
+	public BigDecimal getDescuento() {
 		return descuento;
 	}
-	public void setDescuento(double descuento) {
+	public void setDescuento(BigDecimal descuento) {
 		this.descuento = descuento;
 	}
 	public String getCodMoneda() {
@@ -134,10 +130,10 @@ public class PedidoCabecera {
 	public void setCodMoneda(String codMoneda) {
 		this.codMoneda = codMoneda;
 	}
-	public double getTipCambio() {
+	public BigDecimal getTipCambio() {
 		return tipCambio;
 	}
-	public void setTipCambio(double tipCambio) {
+	public void setTipCambio(BigDecimal tipCambio) {
 		this.tipCambio = tipCambio;
 	}
 	public String getVerificadora() {
@@ -200,10 +196,10 @@ public class PedidoCabecera {
 	public void setAnulado(boolean anulado) {
 		this.anulado = anulado;
 	}
-	public double getCambioMonedaPrecio() {
+	public BigDecimal getCambioMonedaPrecio() {
 		return cambioMonedaPrecio;
 	}
-	public void setCambioMonedaPrecio(double cambioMonedaPrecio) {
+	public void setCambioMonedaPrecio(BigDecimal cambioMonedaPrecio) {
 		this.cambioMonedaPrecio = cambioMonedaPrecio;
 	}
 	public String getTipComprobanteRef() {
@@ -218,10 +214,10 @@ public class PedidoCabecera {
 	public void setSerComprobanteRef(String serComprobanteRef) {
 		this.serComprobanteRef = serComprobanteRef;
 	}
-	public String getNroComprobanteRef() {
+	public int getNroComprobanteRef() {
 		return nroComprobanteRef;
 	}
-	public void setNroComprobanteRef(String nroComprobanteRef) {
+	public void setNroComprobanteRef(int nroComprobanteRef) {
 		this.nroComprobanteRef = nroComprobanteRef;
 	}
 	public String getReferencia() {
@@ -236,10 +232,10 @@ public class PedidoCabecera {
 	public void setIndIvaIncluido(boolean indIvaIncluido) {
 		this.indIvaIncluido = indIvaIncluido;
 	}
-	public double getTotalPeso() {
+	public BigDecimal getTotalPeso() {
 		return totalPeso;
 	}
-	public void setTotalPeso(double totalPeso) {
+	public void setTotalPeso(BigDecimal totalPeso) {
 		this.totalPeso = totalPeso;
 	}
 	public String getCodTecnico() {
@@ -290,16 +286,13 @@ public class PedidoCabecera {
 	public void setEtiqueta(String etiqueta) {
 		this.etiqueta = etiqueta;
 	}
-	public double getCostoEtiqueta() {
+	public BigDecimal getCostoEtiqueta() {
 		return costoEtiqueta;
 	}
-	public void setCostoEtiqueta(double costoEtiqueta) {
+	public void setCostoEtiqueta(BigDecimal costoEtiqueta) {
 		this.costoEtiqueta = costoEtiqueta;
 	}
- 
- 
-	 
     
     
-
+    
 }
