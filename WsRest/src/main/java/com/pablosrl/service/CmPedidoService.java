@@ -81,7 +81,7 @@ public class CmPedidoService {
                 pedido.setCostoEtiqueta(rs.getBigDecimal("COSTO_ETIQUETA"));  // Usando getBigDecimal para NUMBER(10,3)
 
                 pedidos.add(pedido);
-                
+           
             } while (rs.next());
         }
     } catch (SQLException e) {
