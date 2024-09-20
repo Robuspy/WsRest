@@ -8,7 +8,7 @@ public class PedidoCabecera {
 	private String codEmpresa;
     private String tipComprobante;
     private String serComprobante;
-    private int nroComprobante;  // NUMBER(8)
+    private Integer  nroComprobante;  // NUMBER(8)
     private String codSucursal;
     private Date fecComprobante;
     private String codProveedor;
@@ -64,10 +64,10 @@ public class PedidoCabecera {
 	public void setSerComprobante(String serComprobante) {
 		this.serComprobante = serComprobante;
 	}
-	public int getNroComprobante() {
+	public Integer  getNroComprobante() {
 		return nroComprobante;
 	}
-	public void setNroComprobante(int nroComprobante) {
+	public void setNroComprobante(Integer  nroComprobante) {
 		this.nroComprobante = nroComprobante;
 	}
 	public String getCodSucursal() {

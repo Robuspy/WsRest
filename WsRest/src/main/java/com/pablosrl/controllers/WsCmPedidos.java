@@ -39,7 +39,7 @@ public class WsCmPedidos {
         }
     }
 
-    @GET
+    /*@GET
     @Path("/detalle/{codEmpresa}/{tipComprobante}/{serComprobante}/{nroComprobante}")
     public Response obtenerDetallePedidos(
         @PathParam("codEmpresa") String codEmpresa,
@@ -58,8 +58,8 @@ public class WsCmPedidos {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error obteniendo detalles de pedido").build();
         }
     }
-
-   /* @POST
+*/
+    @POST
     @Path("/cabecera")
     public Response insertarPedidoCabecera(PedidoCabecera pedido) {
         if (pedido == null || pedido.getCodEmpresa() == null || pedido.getNroComprobante() == null) {
@@ -75,6 +75,8 @@ public class WsCmPedidos {
         }
     }
 
+
+    /*
     @POST
     @Path("/detalle")
     public Response insertarPedidoDetalle(PedidoDetalle detalle) {

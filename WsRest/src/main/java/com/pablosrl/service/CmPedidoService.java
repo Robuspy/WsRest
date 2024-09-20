@@ -1,5 +1,7 @@
 package com.pablosrl.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,139 +13,170 @@ import com.pablosrl.data.cm_pedidos_compras.PedidoCabecera;
 import com.pablosrl.data.cm_pedidos_compras.PedidoDetalle;
 import com.pablosrl.util.AppUtils;
 
-
 @ApplicationScoped
 public class CmPedidoService {
-	
-	// Método para obtener el próximo número de comprobante
+    
+    // Método para obtener el próximo número de comprobante
     private int obtenerProximoNroComprobante(String codEmpresa, String tipComprobante, String serComprobante) {
         String sql = "SELECT MAX(NRO_COMPROBANTE) AS ultimo_nro FROM cm_pedidos_cabecera "
                      + "WHERE COD_EMPRESA = ? AND TIP_COMPROBANTE = ? AND SER_COMPROBANTE = ?";
         int ultimoNro = 0;
-        try {
-            ResultSet rs = AppUtils.realizaConsulta(sql); // Ajusta este método para que acepte parámetros
-            if (rs.next()) {
-                ultimoNro = rs.getInt("ultimo_nro") + 1;
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, codEmpresa);
+            stmt.setString(2, tipComprobante);
+            stmt.setString(3, serComprobante);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    ultimoNro = rs.getInt("ultimo_nro") + 1;
+                }
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println("Error al obtener el próximo número de comprobante: " + e.getMessage());
         }
         return ultimoNro;
     }
 
-	// Consulta para obtener la cabecera del pedido
-	public List<PedidoCabecera> obtenerCabeceraPedidos() {
-    List<PedidoCabecera> pedidos = new ArrayList<>();
-    String sql = "SELECT COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_SUCURSAL, "
-                 + "FEC_COMPROBANTE, COD_PROVEEDOR, COD_CONDICION_COMPRA, TOT_COMPROBANTE, TOT_GRAVADAS, "
-                 + "TOT_EXENTAS, TOT_IVA, DESCUENTO, COD_MONEDA, TIP_CAMBIO, VERIFICADORA, TRANSPORTE, VIA, "
-                 + "FEC_EMBARQUE, FEC_CONFIRMACION, ESTADO, FEC_ESTADO, COD_USUARIO, FEC_ALTA, ANULADO, "
-                 + "CAMBIO_MONEDA_PRECIO, TIP_COMPROBANTE_REF, SER_COMPROBANTE_REF, NRO_COMPROBANTE_REF, "
-                 + "REFERENCIA, IND_IVA_INCLUIDO, TOTAL_PESO, COD_TECNICO, IND_RECIBIDO, DEPOSITO, FEC_LLEGADA, "
-                 + "COD_SUCURSAL_PED, DESC_SUCURSAL_PED, ENTREGA, ETIQUETA, COSTO_ETIQUETA "
-                 + "FROM cm_pedidos_cabecera";
+    // Consulta para obtener la cabecera del pedido
+    public List<PedidoCabecera> obtenerCabeceraPedidos() {
+        List<PedidoCabecera> pedidos = new ArrayList<>();
+        String sql = "SELECT COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_SUCURSAL, "
+                     + "FEC_COMPROBANTE, COD_PROVEEDOR, COD_CONDICION_COMPRA, TOT_COMPROBANTE, TOT_GRAVADAS, "
+                     + "TOT_EXENTAS, TOT_IVA, DESCUENTO, COD_MONEDA, TIP_CAMBIO, ESTADO, FEC_ESTADO, COD_USUARIO, "
+                     + "ANULADO, CAMBIO_MONEDA_PRECIO, REFERENCIA, IND_IVA_INCLUIDO, TOTAL_PESO, COD_SUCURSAL_PED, "
+                     + "DESC_SUCURSAL_PED, ENTREGA "
+                     + "FROM cm_pedidos_cabecera";
 
-    ResultSet rs = null;
-    try {
-        // Usar AppUtils para realizar la consulta
-        rs = AppUtils.realizaConsulta(sql);
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-        if (!rs.next()) {
-        	System.out.println("No se encontraron datos en la tabla cm_pedidos_cabecera.");
-        } else {
-        	System.out.println("Datos encontrados en la tabla cm_pedidos_cabecera.");
-            do {
+            while (rs.next()) {
                 PedidoCabecera pedido = new PedidoCabecera();
                 pedido.setCodEmpresa(rs.getString("COD_EMPRESA"));
                 pedido.setTipComprobante(rs.getString("TIP_COMPROBANTE"));
                 pedido.setSerComprobante(rs.getString("SER_COMPROBANTE"));
-                pedido.setNroComprobante(rs.getInt("NRO_COMPROBANTE"));  // Cambio a getInt porque es NUMBER(8)
+                pedido.setNroComprobante(rs.getInt("NRO_COMPROBANTE"));
                 pedido.setCodSucursal(rs.getString("COD_SUCURSAL"));
                 pedido.setFecComprobante(rs.getDate("FEC_COMPROBANTE"));
                 pedido.setCodProveedor(rs.getString("COD_PROVEEDOR"));
                 pedido.setCodCondicionCompra(rs.getString("COD_CONDICION_COMPRA"));
-                pedido.setTotComprobante(rs.getBigDecimal("TOT_COMPROBANTE"));  // Cambio a getBigDecimal para NUMBER(18,3)
+                pedido.setTotComprobante(rs.getBigDecimal("TOT_COMPROBANTE"));
                 pedido.setTotGravadas(rs.getBigDecimal("TOT_GRAVADAS"));
                 pedido.setTotExentas(rs.getBigDecimal("TOT_EXENTAS"));
                 pedido.setTotIva(rs.getBigDecimal("TOT_IVA"));
-                //pedido.setDescuento(rs.getBigDecimal("DESCUENTO"));
                 pedido.setCodMoneda(rs.getString("COD_MONEDA"));
                 pedido.setTipCambio(rs.getBigDecimal("TIP_CAMBIO"));
-                /*pedido.setVerificadora(rs.getString("VERIFICADORA"));
-                pedido.setTransporte(rs.getString("TRANSPORTE"));
-                pedido.setVia(rs.getString("VIA"));
-                pedido.setFecEmbarque(rs.getDate("FEC_EMBARQUE"));
-                pedido.setFecConfirmacion(rs.getDate("FEC_CONFIRMACION"));*/
                 pedido.setEstado(rs.getString("ESTADO"));
                 pedido.setFecEstado(rs.getDate("FEC_ESTADO"));
                 pedido.setCodUsuario(rs.getString("COD_USUARIO"));
-                //pedido.setFecAlta(rs.getDate("FEC_ALTA"));
-                pedido.setAnulado(rs.getString("ANULADO"));  // Asumiendo 'Y' como true para VARCHAR2(1)
+                pedido.setAnulado(rs.getString("ANULADO"));
                 pedido.setCambioMonedaPrecio(rs.getBigDecimal("CAMBIO_MONEDA_PRECIO"));
-               /* pedido.setTipComprobanteRef(rs.getString("TIP_COMPROBANTE_REF"));
-                pedido.setSerComprobanteRef(rs.getString("SER_COMPROBANTE_REF"));
-                pedido.setNroComprobanteRef(rs.getInt("NRO_COMPROBANTE_REF")); */ // Cambio a getInt porque es NUMBER(8)
                 pedido.setReferencia(rs.getString("REFERENCIA"));
-                pedido.setIndIvaIncluido(rs.getString("IND_IVA_INCLUIDO"));  // Asumiendo 'Y' como true para VARCHAR2(1)
-                pedido.setTotalPeso(rs.getBigDecimal("TOTAL_PESO"));  // Usando getBigDecimal para NUMBER
-                /*pedido.setCodTecnico(rs.getString("COD_TECNICO"));
-                pedido.setIndRecibido(rs.getString("IND_RECIBIDO"));  // Asumiendo 'Y' como true para VARCHAR2(1)
-                pedido.setDeposito(rs.getString("DEPOSITO"));
-                pedido.setFecLlegada(rs.getDate("FEC_LLEGADA"));*/
+                pedido.setIndIvaIncluido(rs.getString("IND_IVA_INCLUIDO"));
+                pedido.setTotalPeso(rs.getBigDecimal("TOTAL_PESO"));
                 pedido.setCodSucursalPed(rs.getString("COD_SUCURSAL_PED"));
                 pedido.setDescSucursalPed(rs.getString("DESC_SUCURSAL_PED"));
                 pedido.setEntrega(rs.getString("ENTREGA"));
-                //pedido.setEtiqueta(rs.getString("ETIQUETA"));
-                //pedido.setCostoEtiqueta(rs.getBigDecimal("COSTO_ETIQUETA"));  // Usando getBigDecimal para NUMBER(10,3)
 
                 pedidos.add(pedido);
-           
-            } while (rs.next());
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en la consulta SQL: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.out.println("Error en la consulta SQL: " + e.getMessage());
-    } finally {
-        AppUtils.cerrarConsulta();
+        return pedidos;
     }
-	return pedidos;
 
-	}
+    // Método para obtener los detalles de un pedido
+   /* public List<PedidoDetalle> obtenerDetallePedidos(String codEmpresa, String tipComprobante, String serComprobante, String nroComprobante) {
+        List<PedidoDetalle> detalles = new ArrayList<>();
+        String sql = "SELECT COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_ARTICULO, "
+                     + "CANTIDAD, PRECIO_UNITARIO, TOTAL "
+                     + "FROM cm_pedidos_detalle "
+                     + "WHERE COD_EMPRESA = ? AND TIP_COMPROBANTE = ? AND SER_COMPROBANTE = ? AND NRO_COMPROBANTE = ?";
 
-    // Consulta para obtener los detalles del pedido
-    public List<PedidoDetalle> obtenerDetallePedidos(String codEmpresa, String tipComprobante, String serComprobante, String nroComprobante) {
-        // Lógica para obtener los detalles de un pedido específico
-        return null; // Implementar
-    }
-    
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, codEmpresa);
+            stmt.setString(2, tipComprobante);
+            stmt.setString(3, serComprobante);
+            stmt.setString(4, nroComprobante);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    PedidoDetalle detalle = new PedidoDetalle();
+                    detalle.setCodEmpresa(rs.getString("COD_EMPRESA"));
+                    detalle.setTipComprobante(rs.getString("TIP_COMPROBANTE"));
+                    detalle.setSerComprobante(rs.getString("SER_COMPROBANTE"));
+                    detalle.setNroComprobante(rs.getInt("NRO_COMPROBANTE"));
+                    detalle.setCodArticulo(rs.getString("COD_ARTICULO"));
+                    detalle.setCantidad(rs.getBigDecimal("CANTIDAD"));
+                    detalle.setPrecioUnitario(rs.getBigDecimal("PRECIO_UNITARIO"));
+                    detalle.setMontoTotalCIVA(rs.getBigDecimal("TOTAL"));
+
+                    detalles.add(detalle);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener detalles del pedido: " + e.getMessage());
+        }
+        return detalles;
+    }*/
 
     // Inserción de la cabecera del pedido
-    public void insertarPedidoCabecera(PedidoCabecera pedido) {
-        // Calcula el nuevo número de comprobante
+    public void insertarPedidoCabecera(PedidoCabecera pedido) throws SQLException {
         int nuevoNroComprobante = obtenerProximoNroComprobante(pedido.getCodEmpresa(), pedido.getTipComprobante(), pedido.getSerComprobante());
         pedido.setNroComprobante(nuevoNroComprobante);
 
-        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_SUCURSAL, "
-                     + "FEC_COMPROBANTE, COD_PROVEEDOR, COD_CONDICION_COMPRA, TOT_COMPROBANTE, TOT_GRAVADAS, "
-                     + "TOT_EXENTAS, TOT_IVA, DESCUENTO, COD_MONEDA, TIP_CAMBIO, VERIFICADORA, TRANSPORTE, VIA, "
-                     + "FEC_EMBARQUE, FEC_CONFIRMACION, ESTADO, FEC_ESTADO, COD_USUARIO, FEC_ALTA, ANULADO, "
-                     + "CAMBIO_MONEDA_PRECIO, TIP_COMPROBANTE_REF, SER_COMPROBANTE_REF, NRO_COMPROBANTE_REF, "
-                     + "REFERENCIA, IND_IVA_INCLUIDO, TOTAL_PESO, COD_TECNICO, IND_RECIBIDO, DEPOSITO, "
-                     + "FEC_LLEGADA, COD_SUCURSAL_PED, DESC_SUCURSAL_PED, ENTREGA, ETIQUETA, COSTO_ETIQUETA) "
-                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, COD_SUCURSAL_PED, DESC_SUCURSAL_PED, "
+                     + "TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, FEC_COMPROBANTE, COD_PROVEEDOR, COD_CONDICION_COMPRA, "
+                     + "COD_MONEDA, TIP_CAMBIO, CAMBIO_MONEDA_PRECIO, IND_IVA_INCLUIDO, TOT_IVA, TOT_EXENTAS, TOT_GRAVADAS, TOT_COMPROBANTE) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-            AppUtils.realizaCarga(sql); // Puedes ajustar este método para que acepte los parámetros
-        } catch (SQLException e) {
-            System.out.println("Error al insertar cabecera de pedido: " + e.getMessage());
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, pedido.getCodEmpresa());
+            stmt.setString(2, pedido.getCodSucursal());
+            stmt.setString(3, pedido.getCodSucursalPed());
+            stmt.setString(4, pedido.getDescSucursalPed());
+            stmt.setString(5, pedido.getTipComprobante());
+            stmt.setString(6, pedido.getSerComprobante());
+            stmt.setInt(7, pedido.getNroComprobante());
+            stmt.setDate(8, new java.sql.Date(pedido.getFecComprobante().getTime()));
+            stmt.setString(9, pedido.getCodProveedor());
+            stmt.setString(10, pedido.getCodCondicionCompra());
+            stmt.setString(11, pedido.getCodMoneda());
+            stmt.setBigDecimal(12, pedido.getTipCambio());
+            stmt.setBigDecimal(13, pedido.getCambioMonedaPrecio());
+            stmt.setString(14, pedido.isIndIvaIncluido());
+            stmt.setBigDecimal(15, pedido.getTotIva());
+            stmt.setBigDecimal(16, pedido.getTotExentas());
+            stmt.setBigDecimal(17, pedido.getTotGravadas());
+            stmt.setBigDecimal(18, pedido.getTotComprobante());
+
+            stmt.executeUpdate();
         }
     }
-    
 
     // Inserción del detalle del pedido
-    public void insertarPedidoDetalle(PedidoDetalle detalle) {
-        // Lógica para insertar el detalle en la base de datos
-    }
-    
+    /*public void insertarPedidoDetalle(PedidoDetalle detalle) throws SQLException {
+        /*String sql = "INSERT INTO cm_pedidos_detalle (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, "
+                     + "COD_ARTICULO, CANTIDAD, PRECIO_UNITARIO, TOTAL) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, detalle.getCodEmpresa());
+            stmt.setString(2, detalle.getTipComprobante());
+            stmt.setString(3, detalle.getSerComprobante());
+            stmt.setInt(4, detalle.getNroComprobante());
+            stmt.setString(5, detalle.getCodArticulo());
+            stmt.setBigDecimal(6, detalle.getCantidad());
+            stmt.setBigDecimal(7, detalle.getPrecioUnitario());
+            stmt.setBigDecimal(8, detalle.getTotal());
+
+            stmt.executeUpdate();
+        }
+         
+    }*/
 }
+

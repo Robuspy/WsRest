@@ -1,5 +1,7 @@
 package com.pablosrl.controllers;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +30,6 @@ public class WsUsuario {
 
     public WsUsuario() {
         BasicConfigurator.configure();
-
     }
 
     @GET
@@ -36,77 +37,75 @@ public class WsUsuario {
     public List<Usuarios> getIt(@QueryParam("codUsuario") String codigo) {
         Usuarios c = null;
         List<Usuarios> usuarioList = new ArrayList<>();
-        String where = " where cod_usuario = '" + codigo + "'";
-        String sql = consulta() + where ;
+        String sql = consulta() + " WHERE cod_usuario = ?";
         System.out.println("Consulta " + sql);
-        try {
-            ResultSet rs = AppUtils.realizaConsulta(sql);
-            while (rs.next()) {
-            	c = new Usuarios();
-                c.setCodPersona(rs.getString(1));
-                c.setCodUsuario(rs.getString(2));
-                c.setNombre(rs.getString(3));
-                c.setCodGrupo(rs.getString(4));
-                usuarioList.add(c);
-            }
 
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, codigo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    c = new Usuarios();
+                    c.setCodPersona(rs.getString(1));
+                    c.setCodUsuario(rs.getString(2));
+                    c.setNombre(rs.getString(3));
+                    c.setCodGrupo(rs.getString(4));
+                    usuarioList.add(c);
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Error en la consulta ");
             e.printStackTrace();
             logger.error("Error realizando la consulta de usuario " + sql, e);
-            c = null;
         }
-
-        AppUtils.cerrarConsulta();
         return usuarioList;
     }
 
     @GET
     @Path("/obtener")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Usuarios> getItWithPass(@QueryParam("codUsuario") String codigo,@QueryParam("pass") String pass) {
+    public List<Usuarios> getItWithPass(@QueryParam("codUsuario") String codigo, @QueryParam("pass") String pass) {
         Usuarios c = null;
         List<Usuarios> usuarioList = new ArrayList<>();
-        String where = " where cod_usuario = '" + codigo + "' and pass = '"+pass+"'";
-        String sql = consulta() + where ;
-        System.out.println("consulta " + sql);
-        try {
-            ResultSet rs = AppUtils.realizaConsulta(sql);
-            while (rs.next()) {
-            	c = new Usuarios();
-                c.setCodPersona(rs.getString(1));
-                c.setCodUsuario(rs.getString(2));
-                c.setNombre(rs.getString(3));
-                c.setCodGrupo(rs.getString(4));
-                usuarioList.add(c);
-            }
+        String sql = consulta() + " WHERE cod_usuario = ? AND pass = ?";
+        System.out.println("Consulta " + sql);
 
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, codigo);
+            stmt.setString(2, pass);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    c = new Usuarios();
+                    c.setCodPersona(rs.getString(1));
+                    c.setCodUsuario(rs.getString(2));
+                    c.setNombre(rs.getString(3));
+                    c.setCodGrupo(rs.getString(4));
+                    usuarioList.add(c);
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Error en la consulta ");
             e.printStackTrace();
             logger.error("Error realizando la consulta de usuario " + sql, e);
-            c = null;
         }
-
-        AppUtils.cerrarConsulta();
         return usuarioList;
     }
-
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public String create(Usuarios usuario) {
         try {
-            System.out.println("usuario " + usuario.getNombre());
+            System.out.println("Usuario: " + usuario.getNombre());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "Error";
     }
 
-    public String consulta() {
-    	return (
+    private String consulta() {
+        return (
                 "   SELECT u.cod_persona, " +
                 "          u.cod_usuario, " +
                 "          per.nombre AS desc_persona, " +
@@ -114,7 +113,6 @@ public class WsUsuario {
                 "   FROM usuarios u " +
                 "   JOIN personas per ON u.cod_persona = per.cod_persona " +
                 "   AND u.cod_empresa = 1"
-            );
+        );
     }
 }
-

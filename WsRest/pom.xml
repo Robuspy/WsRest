@@ -102,6 +102,13 @@
 	    <version>19.8.0.0</version>
 	</dependency>	
 	
+	<dependency>
+	    <groupId>com.zaxxer</groupId>
+	    <artifactId>HikariCP</artifactId>
+	    <version>5.0.0</version>
+	</dependency>
+
+	
     
   </dependencies>
 

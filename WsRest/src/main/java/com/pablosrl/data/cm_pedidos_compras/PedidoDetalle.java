@@ -1,16 +1,17 @@
 package com.pablosrl.data.cm_pedidos_compras;
 
+import java.math.BigDecimal;
 
 public class PedidoDetalle {
     private String codEmpresa;
     private String tipComprobante;
     private String serComprobante;
-    private String nroComprobante;
+    private Integer  nroComprobante;
     private String codArticulo;
-    private double cantidad;
+    private BigDecimal cantidad;
     private double cantidadConfirmada;
     private boolean seProrratea;
-    private double precioUnitario;
+    private BigDecimal precioUnitario;
     private double ultimoCosto;
     private double montoTotal;
     private double totalIva;
@@ -57,10 +58,10 @@ public class PedidoDetalle {
 	public void setSerComprobante(String serComprobante) {
 		this.serComprobante = serComprobante;
 	}
-	public String getNroComprobante() {
+	public Integer  getNroComprobante() {
 		return nroComprobante;
 	}
-	public void setNroComprobante(String nroComprobante) {
+	public void setNroComprobante(Integer  nroComprobante) {
 		this.nroComprobante = nroComprobante;
 	}
 	public String getCodArticulo() {
@@ -69,11 +70,11 @@ public class PedidoDetalle {
 	public void setCodArticulo(String codArticulo) {
 		this.codArticulo = codArticulo;
 	}
-	public double getCantidad() {
+	public BigDecimal getCantidad() {
 		return cantidad;
 	}
-	public void setCantidad(double cantidad) {
-		this.cantidad = cantidad;
+	public void setCantidad(BigDecimal bigDecimal) {
+		this.cantidad = bigDecimal;
 	}
 	public double getCantidadConfirmada() {
 		return cantidadConfirmada;
@@ -87,10 +88,10 @@ public class PedidoDetalle {
 	public void setSeProrratea(boolean seProrratea) {
 		this.seProrratea = seProrratea;
 	}
-	public double getPrecioUnitario() {
+	public BigDecimal getPrecioUnitario() {
 		return precioUnitario;
 	}
-	public void setPrecioUnitario(double precioUnitario) {
+	public void setPrecioUnitario(BigDecimal precioUnitario) {
 		this.precioUnitario = precioUnitario;
 	}
 	public double getUltimoCosto() {
