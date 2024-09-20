@@ -2,6 +2,10 @@ package com.pablosrl.data.cm_pedidos_compras;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+
+import com.pablosrl.util.AppUtils;
 
 //com.pablosrl.data.PedidoCabecera.java
 public class PedidoCabecera {
@@ -10,7 +14,7 @@ public class PedidoCabecera {
     private String serComprobante;
     private Integer  nroComprobante;  // NUMBER(8)
     private String codSucursal;
-    private Date fecComprobante;
+    private LocalDate fecComprobante;
     private String codProveedor;
     private String codCondicionCompra;
     private BigDecimal totComprobante;  // NUMBER(18,3)
@@ -26,7 +30,7 @@ public class PedidoCabecera {
     private Date fecEmbarque;
     private Date fecConfirmacion;
     private String estado;
-    private Date fecEstado;
+    private LocalDate fecEstado;
     private String codUsuario;
     private Date fecAlta;
     private String anulado;  // VARCHAR2(1) interpretado como String
@@ -76,12 +80,13 @@ public class PedidoCabecera {
 	public void setCodSucursal(String codSucursal) {
 		this.codSucursal = codSucursal;
 	}
-	public Date getFecComprobante() {
-		return fecComprobante;
-	}
-	public void setFecComprobante(Date fecComprobante) {
-		this.fecComprobante = fecComprobante;
-	}
+	// Método para obtener fecComprobante como LocalDate
+    public LocalDate getFecComprobante() {
+        return fecComprobante;
+    }
+    public void setFecComprobante(LocalDate fecComprobante) {
+        this.fecComprobante = fecComprobante;
+    }
 	public String getCodProveedor() {
 		return codProveedor;
 	}
@@ -172,12 +177,13 @@ public class PedidoCabecera {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public Date getFecEstado() {
-		return fecEstado;
-	}
-	public void setFecEstado(Date fecEstado) {
-		this.fecEstado = fecEstado;
-	}
+	public LocalDate getFecEstado() {
+        return fecEstado;
+    }
+
+    public void setFecEstado(LocalDate fecEstado) {
+        this.fecEstado = fecEstado;
+    }
 	public String getCodUsuario() {
 		return codUsuario;
 	}

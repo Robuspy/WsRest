@@ -1,7 +1,12 @@
 package com.pablosrl.util;
 
 import java.sql.Connection;
-import java.sql.SQLException; 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.log4j.Logger;
@@ -48,6 +53,40 @@ public class AppUtils {
     public static void closeDataSource() {
         if (dataSource != null) {
             dataSource.close();
+        }
+    }
+    
+ // Convertir una cadena de texto en formato 'DD/MM/YYYY' a LocalDate
+    public static LocalDate convertirStringAFecha(String fecha) {
+        try {
+            if (fecha != null) {
+                // Usar DateTimeFormatter para manejar fechas en formato DD/MM/YYYY
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate date = LocalDate.parse(fecha, formatter);
+                return date;
+            } else {
+                return null;
+            }
+        } catch (DateTimeParseException e) {
+            logger.error("No se pudo parsear la fecha " + fecha + " " + e);
+            return null;
+        }
+    }
+    
+ // Convertir una cadena de texto en formato 'DD/MM/YYYY HH:mm:ss' a LocalDateTime (fecha y hora)
+    public static LocalDateTime convertirStringAFechaYHora(String fechaHora) {
+        try {
+            if (fechaHora != null) {
+                // Usar DateTimeFormatter para manejar fechas con hora en formato DD/MM/YYYY HH:mm:ss
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime dateTime = LocalDateTime.parse(fechaHora, formatter);
+                return dateTime;
+            } else {
+                return null;
+            }
+        } catch (DateTimeParseException e) {
+            logger.error("No se pudo parsear la fecha y hora " + fechaHora + " " + e);
+            return null;
         }
     }
 }

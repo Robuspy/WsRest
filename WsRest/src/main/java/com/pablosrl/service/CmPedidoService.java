@@ -58,7 +58,7 @@ public class CmPedidoService {
                 pedido.setSerComprobante(rs.getString("SER_COMPROBANTE"));
                 pedido.setNroComprobante(rs.getInt("NRO_COMPROBANTE"));
                 pedido.setCodSucursal(rs.getString("COD_SUCURSAL"));
-                pedido.setFecComprobante(rs.getDate("FEC_COMPROBANTE"));
+                pedido.setFecComprobante(rs.getDate("FEC_COMPROBANTE").toLocalDate());
                 pedido.setCodProveedor(rs.getString("COD_PROVEEDOR"));
                 pedido.setCodCondicionCompra(rs.getString("COD_CONDICION_COMPRA"));
                 pedido.setTotComprobante(rs.getBigDecimal("TOT_COMPROBANTE"));
@@ -68,7 +68,7 @@ public class CmPedidoService {
                 pedido.setCodMoneda(rs.getString("COD_MONEDA"));
                 pedido.setTipCambio(rs.getBigDecimal("TIP_CAMBIO"));
                 pedido.setEstado(rs.getString("ESTADO"));
-                pedido.setFecEstado(rs.getDate("FEC_ESTADO"));
+                pedido.setFecEstado(rs.getDate("FEC_ESTADO").toLocalDate());
                 pedido.setCodUsuario(rs.getString("COD_USUARIO"));
                 pedido.setAnulado(rs.getString("ANULADO"));
                 pedido.setCambioMonedaPrecio(rs.getBigDecimal("CAMBIO_MONEDA_PRECIO"));
@@ -141,7 +141,7 @@ public class CmPedidoService {
             stmt.setString(5, pedido.getTipComprobante());
             stmt.setString(6, pedido.getSerComprobante());
             stmt.setInt(7, pedido.getNroComprobante());
-            stmt.setDate(8, new java.sql.Date(pedido.getFecComprobante().getTime()));
+            stmt.setDate(8, java.sql.Date.valueOf(pedido.getFecComprobante()));
             stmt.setString(9, pedido.getCodProveedor());
             stmt.setString(10, pedido.getCodCondicionCompra());
             stmt.setString(11, pedido.getCodMoneda());
