@@ -29,16 +29,16 @@ public class PedidoCabecera {
     private Date fecEstado;
     private String codUsuario;
     private Date fecAlta;
-    private boolean anulado;  // VARCHAR2(1) interpretado como boolean
+    private String anulado;  // VARCHAR2(1) interpretado como String
     private BigDecimal cambioMonedaPrecio;  // NUMBER(9,4)
     private String tipComprobanteRef;
     private String serComprobanteRef;
     private int nroComprobanteRef;  // NUMBER(8)
     private String referencia;
-    private boolean indIvaIncluido;  // VARCHAR2(1) interpretado como boolean
+    private String indIvaIncluido;  // VARCHAR2(1) interpretado como String
     private BigDecimal totalPeso;  // NUMBER
     private String codTecnico;
-    private boolean indRecibido;  // VARCHAR2(1) interpretado como boolean
+    private String indRecibido;  // VARCHAR2(1) interpretado como String
     private String deposito;
     private Date fecLlegada;
     private String codSucursalPed;
@@ -190,10 +190,10 @@ public class PedidoCabecera {
 	public void setFecAlta(Date fecAlta) {
 		this.fecAlta = fecAlta;
 	}
-	public boolean isAnulado() {
+	public String isAnulado() {
 		return anulado;
 	}
-	public void setAnulado(boolean anulado) {
+	public void setAnulado(String anulado) {
 		this.anulado = anulado;
 	}
 	public BigDecimal getCambioMonedaPrecio() {
@@ -226,10 +226,10 @@ public class PedidoCabecera {
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
 	}
-	public boolean isIndIvaIncluido() {
+	public String isIndIvaIncluido() {
 		return indIvaIncluido;
 	}
-	public void setIndIvaIncluido(boolean indIvaIncluido) {
+	public void setIndIvaIncluido(String indIvaIncluido) {
 		this.indIvaIncluido = indIvaIncluido;
 	}
 	public BigDecimal getTotalPeso() {
@@ -244,10 +244,10 @@ public class PedidoCabecera {
 	public void setCodTecnico(String codTecnico) {
 		this.codTecnico = codTecnico;
 	}
-	public boolean isIndRecibido() {
+	public String isIndRecibido() {
 		return indRecibido;
 	}
-	public void setIndRecibido(boolean indRecibido) {
+	public void setIndRecibido(String indRecibido) {
 		this.indRecibido = indRecibido;
 	}
 	public String getDeposito() {

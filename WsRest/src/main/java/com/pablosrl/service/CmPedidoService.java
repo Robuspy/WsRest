@@ -14,6 +14,23 @@ import com.pablosrl.util.AppUtils;
 
 @ApplicationScoped
 public class CmPedidoService {
+	
+	// Método para obtener el próximo número de comprobante
+    private int obtenerProximoNroComprobante(String codEmpresa, String tipComprobante, String serComprobante) {
+        String sql = "SELECT MAX(NRO_COMPROBANTE) AS ultimo_nro FROM cm_pedidos_cabecera "
+                     + "WHERE COD_EMPRESA = ? AND TIP_COMPROBANTE = ? AND SER_COMPROBANTE = ?";
+        int ultimoNro = 0;
+        try {
+            ResultSet rs = AppUtils.realizaConsulta(sql); // Ajusta este método para que acepte parámetros
+            if (rs.next()) {
+                ultimoNro = rs.getInt("ultimo_nro") + 1;
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el próximo número de comprobante: " + e.getMessage());
+        }
+        return ultimoNro;
+    }
 
 	// Consulta para obtener la cabecera del pedido
 	public List<PedidoCabecera> obtenerCabeceraPedidos() {
@@ -50,35 +67,35 @@ public class CmPedidoService {
                 pedido.setTotGravadas(rs.getBigDecimal("TOT_GRAVADAS"));
                 pedido.setTotExentas(rs.getBigDecimal("TOT_EXENTAS"));
                 pedido.setTotIva(rs.getBigDecimal("TOT_IVA"));
-                pedido.setDescuento(rs.getBigDecimal("DESCUENTO"));
+                //pedido.setDescuento(rs.getBigDecimal("DESCUENTO"));
                 pedido.setCodMoneda(rs.getString("COD_MONEDA"));
                 pedido.setTipCambio(rs.getBigDecimal("TIP_CAMBIO"));
-                pedido.setVerificadora(rs.getString("VERIFICADORA"));
+                /*pedido.setVerificadora(rs.getString("VERIFICADORA"));
                 pedido.setTransporte(rs.getString("TRANSPORTE"));
                 pedido.setVia(rs.getString("VIA"));
                 pedido.setFecEmbarque(rs.getDate("FEC_EMBARQUE"));
-                pedido.setFecConfirmacion(rs.getDate("FEC_CONFIRMACION"));
+                pedido.setFecConfirmacion(rs.getDate("FEC_CONFIRMACION"));*/
                 pedido.setEstado(rs.getString("ESTADO"));
                 pedido.setFecEstado(rs.getDate("FEC_ESTADO"));
                 pedido.setCodUsuario(rs.getString("COD_USUARIO"));
-                pedido.setFecAlta(rs.getDate("FEC_ALTA"));
-                pedido.setAnulado("Y".equals(rs.getString("ANULADO")));  // Asumiendo 'Y' como true para VARCHAR2(1)
+                //pedido.setFecAlta(rs.getDate("FEC_ALTA"));
+                pedido.setAnulado(rs.getString("ANULADO"));  // Asumiendo 'Y' como true para VARCHAR2(1)
                 pedido.setCambioMonedaPrecio(rs.getBigDecimal("CAMBIO_MONEDA_PRECIO"));
-                pedido.setTipComprobanteRef(rs.getString("TIP_COMPROBANTE_REF"));
+               /* pedido.setTipComprobanteRef(rs.getString("TIP_COMPROBANTE_REF"));
                 pedido.setSerComprobanteRef(rs.getString("SER_COMPROBANTE_REF"));
-                pedido.setNroComprobanteRef(rs.getInt("NRO_COMPROBANTE_REF"));  // Cambio a getInt porque es NUMBER(8)
+                pedido.setNroComprobanteRef(rs.getInt("NRO_COMPROBANTE_REF")); */ // Cambio a getInt porque es NUMBER(8)
                 pedido.setReferencia(rs.getString("REFERENCIA"));
-                pedido.setIndIvaIncluido("Y".equals(rs.getString("IND_IVA_INCLUIDO")));  // Asumiendo 'Y' como true para VARCHAR2(1)
+                pedido.setIndIvaIncluido(rs.getString("IND_IVA_INCLUIDO"));  // Asumiendo 'Y' como true para VARCHAR2(1)
                 pedido.setTotalPeso(rs.getBigDecimal("TOTAL_PESO"));  // Usando getBigDecimal para NUMBER
-                pedido.setCodTecnico(rs.getString("COD_TECNICO"));
-                pedido.setIndRecibido("Y".equals(rs.getString("IND_RECIBIDO")));  // Asumiendo 'Y' como true para VARCHAR2(1)
+                /*pedido.setCodTecnico(rs.getString("COD_TECNICO"));
+                pedido.setIndRecibido(rs.getString("IND_RECIBIDO"));  // Asumiendo 'Y' como true para VARCHAR2(1)
                 pedido.setDeposito(rs.getString("DEPOSITO"));
-                pedido.setFecLlegada(rs.getDate("FEC_LLEGADA"));
+                pedido.setFecLlegada(rs.getDate("FEC_LLEGADA"));*/
                 pedido.setCodSucursalPed(rs.getString("COD_SUCURSAL_PED"));
                 pedido.setDescSucursalPed(rs.getString("DESC_SUCURSAL_PED"));
                 pedido.setEntrega(rs.getString("ENTREGA"));
-                pedido.setEtiqueta(rs.getString("ETIQUETA"));
-                pedido.setCostoEtiqueta(rs.getBigDecimal("COSTO_ETIQUETA"));  // Usando getBigDecimal para NUMBER(10,3)
+                //pedido.setEtiqueta(rs.getString("ETIQUETA"));
+                //pedido.setCostoEtiqueta(rs.getBigDecimal("COSTO_ETIQUETA"));  // Usando getBigDecimal para NUMBER(10,3)
 
                 pedidos.add(pedido);
            
@@ -99,11 +116,30 @@ public class CmPedidoService {
         // Lógica para obtener los detalles de un pedido específico
         return null; // Implementar
     }
+    
 
     // Inserción de la cabecera del pedido
     public void insertarPedidoCabecera(PedidoCabecera pedido) {
-        // Lógica para insertar el pedido en la base de datos
+        // Calcula el nuevo número de comprobante
+        int nuevoNroComprobante = obtenerProximoNroComprobante(pedido.getCodEmpresa(), pedido.getTipComprobante(), pedido.getSerComprobante());
+        pedido.setNroComprobante(nuevoNroComprobante);
+
+        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_SUCURSAL, "
+                     + "FEC_COMPROBANTE, COD_PROVEEDOR, COD_CONDICION_COMPRA, TOT_COMPROBANTE, TOT_GRAVADAS, "
+                     + "TOT_EXENTAS, TOT_IVA, DESCUENTO, COD_MONEDA, TIP_CAMBIO, VERIFICADORA, TRANSPORTE, VIA, "
+                     + "FEC_EMBARQUE, FEC_CONFIRMACION, ESTADO, FEC_ESTADO, COD_USUARIO, FEC_ALTA, ANULADO, "
+                     + "CAMBIO_MONEDA_PRECIO, TIP_COMPROBANTE_REF, SER_COMPROBANTE_REF, NRO_COMPROBANTE_REF, "
+                     + "REFERENCIA, IND_IVA_INCLUIDO, TOTAL_PESO, COD_TECNICO, IND_RECIBIDO, DEPOSITO, "
+                     + "FEC_LLEGADA, COD_SUCURSAL_PED, DESC_SUCURSAL_PED, ENTREGA, ETIQUETA, COSTO_ETIQUETA) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            AppUtils.realizaCarga(sql); // Puedes ajustar este método para que acepte los parámetros
+        } catch (SQLException e) {
+            System.out.println("Error al insertar cabecera de pedido: " + e.getMessage());
+        }
     }
+    
 
     // Inserción del detalle del pedido
     public void insertarPedidoDetalle(PedidoDetalle detalle) {
