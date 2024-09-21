@@ -1,5 +1,6 @@
 package com.pablosrl.controllers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,18 +63,42 @@ public class WsCmPedidos {
     @POST
     @Path("/cabecera")
     public Response insertarPedidoCabecera(PedidoCabecera pedido) {
-        if (pedido == null || pedido.getCodEmpresa() == null || pedido.getNroComprobante() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Datos incompletos").build();
+        // Verificar si los datos obligatorios están presentes
+        if (pedido == null ||
+            pedido.getCodEmpresa() == null || pedido.getCodEmpresa().isEmpty() ||
+            pedido.getCodSucursal() == null || pedido.getCodSucursal().isEmpty() ||
+            pedido.getCodSucursalPed() == null || pedido.getCodSucursalPed().isEmpty() ||
+            pedido.getDescSucursalPed() == null || pedido.getDescSucursalPed().isEmpty() ||
+            pedido.getTipComprobante() == null || pedido.getTipComprobante().isEmpty() ||
+            pedido.getSerComprobante() == null || pedido.getSerComprobante().isEmpty() ||
+            pedido.getFecComprobante() == null ||  // Debe haber una fecha
+            pedido.getCodProveedor() == null || pedido.getCodProveedor().isEmpty() ||
+            pedido.getCodCondicionCompra() == null || pedido.getCodCondicionCompra().isEmpty() ||
+            pedido.getCodMoneda() == null || pedido.getCodMoneda().isEmpty() ||
+            pedido.getTipCambio() == null || pedido.getTipCambio().compareTo(BigDecimal.ZERO) <= 0 ||  // El tipo de cambio no puede ser negativo o cero
+            pedido.getTotComprobante() == null || pedido.getTotComprobante().compareTo(BigDecimal.ZERO) <= 0  // El total del comprobante no puede ser negativo o cero
+        ) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Datos incompletos o incorrectos").build();
         }
+
         try {
             logger.info("Insertando cabecera de pedido para empresa: " + pedido.getCodEmpresa());
+            
+            // Insertar el pedido y obtener el número de comprobante generado
             pedidoService.insertarPedidoCabecera(pedido);
-            return Response.status(Response.Status.CREATED).build();
+            int nroComprobanteGenerado = pedido.getNroComprobante();  // Suponiendo que el número se genera en el servicio
+
+            // Devolver el mensaje de éxito junto con el número de pedido generado
+            String mensajeExito = "Pedido insertado correctamente. Número de comprobante: " + nroComprobanteGenerado;
+            return Response.status(Response.Status.CREATED).entity(mensajeExito).build();
+            
         } catch (Exception e) {
             logger.error("Error insertando cabecera de pedido", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido cabecera").build();
         }
     }
+
+
 
 
     /*
