@@ -14,7 +14,7 @@ public class PedidoCabecera {
     private String serComprobante;
     private Integer  nroComprobante;  // NUMBER(8)
     private String codSucursal;
-    private LocalDate fecComprobante;
+    /*private LocalDate fecComprobante;
     private String codProveedor;
     private String codCondicionCompra;
     private BigDecimal totComprobante;  // NUMBER(18,3)
@@ -50,6 +50,7 @@ public class PedidoCabecera {
     private String entrega;
     private String etiqueta;
     private BigDecimal costoEtiqueta;  // NUMBER(10,3)
+    */
 	public String getCodEmpresa() {
 		return codEmpresa;
 	}
@@ -80,7 +81,7 @@ public class PedidoCabecera {
 	public void setCodSucursal(String codSucursal) {
 		this.codSucursal = codSucursal;
 	}
-	// Método para obtener fecComprobante como LocalDate
+	/*// Método para obtener fecComprobante como LocalDate
     public LocalDate getFecComprobante() {
         return fecComprobante;
     }
@@ -299,6 +300,6 @@ public class PedidoCabecera {
 		this.costoEtiqueta = costoEtiqueta;
 	}
     
-    
+    */
     
 }

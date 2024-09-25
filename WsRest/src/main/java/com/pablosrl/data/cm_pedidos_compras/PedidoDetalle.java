@@ -7,26 +7,30 @@ public class PedidoDetalle {
     private String tipComprobante;
     private String serComprobante;
     private Integer nroComprobante;
+    private Integer nroOrden;
     private String codArticulo;
+    private String descArticulo;
+    private String nroLote;
+    
     private BigDecimal cantidad;
     private BigDecimal precioUnitario;
+    private BigDecimal precioUnitarioCIVA;
     private BigDecimal montoTotal;
+    private BigDecimal montoTotalCIVA;
+    
+   /* 
     private BigDecimal totalIva;
     private String codUnidadMedida;
     private BigDecimal cantidadUb;
-    private BigDecimal precioUnitarioCIVA;
-    private BigDecimal montoTotalCIVA;
     private BigDecimal porcIva;
     private BigDecimal porcGravadas;
     private BigDecimal mult;
     private BigDecimal div;
     private BigDecimal montoGravadas;
     private BigDecimal montoExentas;
-    private String codIva;
-    private BigDecimal totalPesoArt;
-    private String nroLote;
-    private Integer nroOrden;
-    private String descArticulo;
+    private String codIva; 
+    
+    */
 
     // Getters and setters for each field
 
@@ -61,6 +65,14 @@ public class PedidoDetalle {
     public void setNroComprobante(Integer nroComprobante) {
         this.nroComprobante = nroComprobante;
     }
+    
+    public Integer getNroOrden() {
+        return nroOrden;
+    }
+
+    public void setNroOrden(Integer nroOrden) {
+        this.nroOrden = nroOrden;
+    }
 
     public String getCodArticulo() {
         return codArticulo;
@@ -93,7 +105,7 @@ public class PedidoDetalle {
     public void setMontoTotal(BigDecimal montoTotal) {
         this.montoTotal = montoTotal;
     }
-
+/*
     public BigDecimal getTotalIva() {
         return totalIva;
     }
@@ -117,7 +129,7 @@ public class PedidoDetalle {
     public void setCantidadUb(BigDecimal cantidadUb) {
         this.cantidadUb = cantidadUb;
     }
-
+*/
     public BigDecimal getPrecioUnitarioCIVA() {
         return precioUnitarioCIVA;
     }
@@ -133,7 +145,7 @@ public class PedidoDetalle {
     public void setMontoTotalCIVA(BigDecimal montoTotalCIVA) {
         this.montoTotalCIVA = montoTotalCIVA;
     }
-
+/*
     public BigDecimal getPorcIva() {
         return porcIva;
     }
@@ -197,7 +209,7 @@ public class PedidoDetalle {
     public void setTotalPesoArt(BigDecimal totalPesoArt) {
         this.totalPesoArt = totalPesoArt;
     }
-
+*/
     public String getNroLote() {
         return nroLote;
     }
@@ -206,15 +218,9 @@ public class PedidoDetalle {
         this.nroLote = nroLote;
     }
 
-    public Integer getNroOrden() {
-        return nroOrden;
-    }
 
-    public void setNroOrden(Integer nroOrden) {
-        this.nroOrden = nroOrden;
-    }
 
-    public String getDescArticulo() {
+     public String getDescArticulo() {
         return descArticulo;
     }
 

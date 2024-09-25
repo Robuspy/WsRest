@@ -20,7 +20,7 @@ public class WsCmPedidos {
 
     private static final Logger logger = Logger.getLogger(WsCmPedidos.class);
 
-    // GET para obtener un pedido completo (cabecera + detalles)
+ // GET para obtener un pedido completo (cabecera + detalles)
     @GET
     @Path("/completo/{codEmpresa}/{tipComprobante}/{serComprobante}/{nroComprobante}")
     public Response obtenerPedidoCompleto(
@@ -31,10 +31,12 @@ public class WsCmPedidos {
         
         try {
             PedidoCompletoDTO pedidoCompleto = pedidoService.obtenerPedidoCompleto(codEmpresa, tipComprobante, serComprobante, nroComprobante);
+            
+            // Si no se encuentra el pedido, devolver NO_CONTENT
             if (pedidoCompleto != null) {
-                return Response.ok(pedidoCompleto).build();
+                return Response.ok(pedidoCompleto).build();  // Devolver el pedido completo, incluyendo campos con null
             } else {
-                return Response.status(Response.Status.NO_CONTENT).build();
+                return Response.status(Response.Status.NO_CONTENT).build();  // Si no se encuentra el pedido, devolver NO_CONTENT
             }
         } catch (Exception e) {
             logger.error("Error obteniendo pedido completo", e);
@@ -42,7 +44,8 @@ public class WsCmPedidos {
         }
     }
 
-    // POST para insertar un pedido completo (cabecera + detalles)
+
+ // POST para insertar un pedido completo (cabecera + detalles)
     @POST
     @Path("/completo")
     public Response insertarPedidoCompleto(PedidoCompletoDTO pedidoCompleto) {
@@ -52,10 +55,10 @@ public class WsCmPedidos {
 
         try {
             logger.info("Insertando pedido completo para empresa: " + pedidoCompleto.getCabecera().getCodEmpresa());
-            boolean resultado = pedidoService.insertarPedidoCompleto(pedidoCompleto);
-            
-            if (resultado) {
-                return Response.status(Response.Status.CREATED).entity("Pedido completo insertado correctamente").build();
+            String resultado = pedidoService.insertarPedidoCompleto(pedidoCompleto);
+
+            if (resultado != null) {
+                return Response.status(Response.Status.CREATED).entity(resultado).build();  // Devolver el mensaje con el número de comprobante
             } else {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo").build();
             }
@@ -65,4 +68,5 @@ public class WsCmPedidos {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo").build();
         }
     }
+
 }
