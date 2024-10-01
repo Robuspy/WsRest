@@ -233,7 +233,7 @@ public class CmPedidoService {
         pedido.setNroComprobante(nuevoNroComprobante);
 
         String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE) "
-                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     + "VALUES (?, ?, ?, ?, ?,)";
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
         	
@@ -269,16 +269,16 @@ public class CmPedidoService {
 
     // Inserción del detalle del pedido con transacción
     public void insertarPedidoDetalle(PedidoDetalle detalle, Connection con) throws SQLException {
-        String sql = "INSERT INTO cm_pedidos_detalle (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE) "
-                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cm_pedidos_detalle (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_ARTICULO) "
+                     + "VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, detalle.getCodEmpresa());
             stmt.setString(2, detalle.getTipComprobante());
             stmt.setString(3, detalle.getSerComprobante());
             stmt.setInt(4, detalle.getNroComprobante());
-            /*stmt.setString(5, detalle.getCodArticulo());
-            stmt.setBigDecimal(6, detalle.getCantidad());
+            stmt.setString(5, detalle.getCodArticulo());
+            /*stmt.setBigDecimal(6, detalle.getCantidad());
             stmt.setBigDecimal(7, detalle.getPrecioUnitario());
             stmt.setBigDecimal(8, detalle.getMontoTotal());
             stmt.setBigDecimal(9, detalle.getTotalIva());*/
