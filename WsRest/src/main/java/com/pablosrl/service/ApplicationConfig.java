@@ -34,6 +34,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.pablosrl.controllers.WsSucursales.class);
          
         //Compras
+        resources.add(com.pablosrl.controllers.compras.WsCondicionesCompra.class);
         resources.add(com.pablosrl.controllers.WsProveedores.class);
         resources.add(com.pablosrl.controllers.WsCmPedidos.class);
         
