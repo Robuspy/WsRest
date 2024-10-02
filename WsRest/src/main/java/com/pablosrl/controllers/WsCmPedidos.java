@@ -54,19 +54,29 @@ public class WsCmPedidos {
         }
 
         try {
+            // Verificar los datos que llegan en el PedidoCompletoDTO
             logger.info("Insertando pedido completo para empresa: " + pedidoCompleto.getCabecera().getCodEmpresa());
+            logger.info("Cabecera: " + pedidoCompleto.getCabecera().toString());
+            logger.info("Detalles: " + pedidoCompleto.getDetalles().size() + " detalles recibidos");
+
+            // Intentar insertar el pedido completo
             String resultado = pedidoService.insertarPedidoCompleto(pedidoCompleto);
 
             if (resultado != null) {
                 return Response.status(Response.Status.CREATED).entity(resultado).build();  // Devolver el mensaje con el número de comprobante
             } else {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo").build();
+            	logger.error("Error en la inserción del pedido completo: el servicio devolvió null o un resultado inesperado a.");
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo: resultado inesperado a").build();
             }
 
         } catch (Exception e) {
-            logger.error("Error insertando pedido completo", e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo").build();
+            // Registrar el mensaje completo del error
+            logger.error("Error insertando pedido completo: " + e.getMessage(), e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                           .entity("Error insertando el pedido completo: " + e.getMessage())
+                           .build();
         }
     }
+
 
 }

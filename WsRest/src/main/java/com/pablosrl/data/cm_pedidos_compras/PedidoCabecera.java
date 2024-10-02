@@ -14,6 +14,8 @@ public class PedidoCabecera {
     private String serComprobante;
     private Integer  nroComprobante;  // NUMBER(8)
     private String codSucursal;
+    private String codSucursalPed;
+    private String descSucursalPed;
     /*private LocalDate fecComprobante;
     private String codProveedor;
     private String codCondicionCompra;
@@ -45,8 +47,7 @@ public class PedidoCabecera {
     private String indRecibido;  // VARCHAR2(1) interpretado como String
     private String deposito;
     private Date fecLlegada;
-    private String codSucursalPed;
-    private String descSucursalPed;
+    
     private String entrega;
     private String etiqueta;
     private BigDecimal costoEtiqueta;  // NUMBER(10,3)
@@ -80,6 +81,19 @@ public class PedidoCabecera {
 	}
 	public void setCodSucursal(String codSucursal) {
 		this.codSucursal = codSucursal;
+	}
+	
+	public String getCodSucursalPed() {
+		return codSucursalPed;
+	}
+	public void setCodSucursalPed(String codSucursalPed) {
+		this.codSucursalPed = codSucursalPed;
+	}
+	public String getDescSucursalPed() {
+		return descSucursalPed;
+	}
+	public void setDescSucursalPed(String descSucursalPed) {
+		this.descSucursalPed = descSucursalPed;
 	}
 	/*// Método para obtener fecComprobante como LocalDate
     public LocalDate getFecComprobante() {
@@ -269,18 +283,7 @@ public class PedidoCabecera {
 	public void setFecLlegada(Date fecLlegada) {
 		this.fecLlegada = fecLlegada;
 	}
-	public String getCodSucursalPed() {
-		return codSucursalPed;
-	}
-	public void setCodSucursalPed(String codSucursalPed) {
-		this.codSucursalPed = codSucursalPed;
-	}
-	public String getDescSucursalPed() {
-		return descSucursalPed;
-	}
-	public void setDescSucursalPed(String descSucursalPed) {
-		this.descSucursalPed = descSucursalPed;
-	}
+	
 	public String getEntrega() {
 		return entrega;
 	}

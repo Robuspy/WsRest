@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.pablosrl.controllers.WsUsuario.class);
         resources.add(com.pablosrl.controllers.ExampleService.class);
         resources.add(com.pablosrl.controllers.WsCmPedidos.class);
+        resources.add(com.pablosrl.controllers.WsSucursales.class);
         
         
         

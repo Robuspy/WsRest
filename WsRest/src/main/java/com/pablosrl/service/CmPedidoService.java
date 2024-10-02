@@ -186,22 +186,32 @@ public class CmPedidoService {
             con = AppUtils.getConnection();
             con.setAutoCommit(false);  // Iniciar la transacción
 
+            // Obtener el próximo número de comprobante
+            int nuevoNroComprobante = obtenerProximoNroComprobante(
+                pedidoCompleto.getCabecera().getCodEmpresa(),
+                pedidoCompleto.getCabecera().getTipComprobante(),
+                pedidoCompleto.getCabecera().getSerComprobante(),
+                con
+            );
+            pedidoCompleto.getCabecera().setNroComprobante(nuevoNroComprobante);
+
+            logger.info("Insertando cabecera del pedido con nroComprobante: " + nuevoNroComprobante);
             // Insertar la cabecera del pedido
             insertarPedidoCabecera(pedidoCompleto.getCabecera(), con);
 
-            int nroComprobanteGenerado = pedidoCompleto.getCabecera().getNroComprobante(); // Obtener el nroComprobante generado
-
+            logger.info("Insertando detalles del pedido");
             // Insertar cada detalle asociado al pedido
             for (PedidoDetalle detalle : pedidoCompleto.getDetalles()) {
-                detalle.setNroComprobante(nroComprobanteGenerado); // Asignar el nroComprobante de la cabecera al detalle
+                detalle.setNroComprobante(nuevoNroComprobante);  // Asignar el nroComprobante de la cabecera al detalle
                 insertarPedidoDetalle(detalle, con);
             }
 
-            // Si todo sale bien, se hace commit
+            // Si todo sale bien, hacer commit
             con.commit();
+            logger.info("Pedido completo insertado correctamente con nroComprobante: " + nuevoNroComprobante);
 
             // Devolver el número de comprobante generado
-            return "Pedido completo insertado correctamente. Número de comprobante: " + nroComprobanteGenerado;
+            return "Pedido completo insertado correctamente. Número de comprobante: " + nuevoNroComprobante;
 
         } catch (SQLException e) {
             logger.error("Error insertando el pedido completo, realizando rollback: " + e.getMessage(), e);
@@ -227,13 +237,15 @@ public class CmPedidoService {
     }
 
 
+
     // Inserción de la cabecera del pedido con transacción
     public void insertarPedidoCabecera(PedidoCabecera pedido, Connection con) throws SQLException {
         int nuevoNroComprobante = obtenerProximoNroComprobante(pedido.getCodEmpresa(), pedido.getTipComprobante(), pedido.getSerComprobante(), con);
         pedido.setNroComprobante(nuevoNroComprobante);
 
-        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE) "
-                     + "VALUES (?, ?, ?, ?, ?,)";
+        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, "
+        											+ "COD_SUCURSAL_PED, DESC_SUCURSAL_PED ) "
+                     + "VALUES (?, ?, ?, ?, ?,?,?)";
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
         	
@@ -242,14 +254,14 @@ public class CmPedidoService {
             stmt.setString(3, pedido.getTipComprobante());
             stmt.setString(4, pedido.getSerComprobante());
             stmt.setInt(5, pedido.getNroComprobante());
+            
+            stmt.setString(6, pedido.getCodSucursalPed());
+            stmt.setString(7, pedido.getDescSucursalPed());
         	
         	
-            /*stmt.setString(1, pedido.getCodEmpresa());
-            stmt.setString(2, pedido.getCodSucursal());
-            stmt.setString(3, pedido.getCodSucursalPed());
-            stmt.setString(4, pedido.getDescSucursalPed());
-            stmt.setString(5, pedido.getTipComprobante());
-            stmt.setString(6, pedido.getSerComprobante());
+            /*
+            
+            
             stmt.setInt(7, pedido.getNroComprobante());
             stmt.setDate(8, java.sql.Date.valueOf(pedido.getFecComprobante()));
             stmt.setString(9, pedido.getCodProveedor());
