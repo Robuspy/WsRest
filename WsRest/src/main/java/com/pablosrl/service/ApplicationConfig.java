@@ -27,10 +27,15 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         /*resources.add(com.pablosrl.service.WsAlerta.class);*/
         
-        resources.add(com.pablosrl.controllers.WsUsuario.class);
+        
         resources.add(com.pablosrl.controllers.ExampleService.class);
-        resources.add(com.pablosrl.controllers.WsCmPedidos.class);
+        //Base - Sistema Base
+        resources.add(com.pablosrl.controllers.WsUsuario.class);
         resources.add(com.pablosrl.controllers.WsSucursales.class);
+         
+        //Compras
+        resources.add(com.pablosrl.controllers.WsProveedores.class);
+        resources.add(com.pablosrl.controllers.WsCmPedidos.class);
         
         
         
