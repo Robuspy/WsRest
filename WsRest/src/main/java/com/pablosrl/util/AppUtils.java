@@ -1,5 +1,7 @@
 package com.pablosrl.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,14 +17,13 @@ public class AppUtils {
 
     static Logger logger = Logger.getLogger(AppUtils.class);
 
- // Configuraciones de conexión a la base de datos
-    private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.100.225:1521:ORCL"; // DESARROLLO INV casa robus 29-07-2023
-    // private static final String DATABASE_URL = "jdbc:oracle:thin:@201.222.48.18:3321:cab"; // DESARROLLO INV REMOTO
-    // private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL"; // PRODUCCION
+    // URLs de conexión a la base de datos para desarrollo y producción
+    private static final String DEV_DATABASE_URL = "jdbc:oracle:thin:@192.168.100.225:1521:ORCL"; // DESARROLLO
+    private static final String PROD_DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL";   // PRODUCCION
 
-    // Añadir la constante para la ruta de las imágenes
-    public static final String IMAGE_DIRECTORY = "\\\\192.168.100.225\\fotos_articulos\\"; // Prueba local casa robus
-    // public static final String IMAGE_DIRECTORY = "\\\\\\\\192.168.0.56\\\\inventiva\\\\INVENTIVA\\\\EXE\\\\FOTOS_ARTICULOS\\\\";
+    // Ruta de imágenes
+    public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo
+    public static final String IMAGE_DIRECTORY_PROD = "\\\\192.168.0.56\\inventiva\\INVENTIVA\\EXE\\FOTOS_ARTICULOS\\"; // Producción
 
     // Usuario y contraseña de la base de datos
     private static final String DATABASE_USER = "inv";
@@ -33,7 +34,30 @@ public class AppUtils {
 
     static {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(DATABASE_URL);
+
+        try {
+            // Detectar la IP del servidor donde está corriendo la aplicación
+            String serverIp = InetAddress.getLocalHost().getHostAddress();
+            System.out.println("IP del servidor detectada: " + serverIp);
+
+            // Compara la IP y selecciona la URL de la base de datos correspondiente
+            if (serverIp.equals("192.168.0.56")) {
+                // Si está en producción
+                config.setJdbcUrl(PROD_DATABASE_URL);
+                System.out.println("Conectado al servidor de PRODUCCIÓN");
+            } else {
+                // Si está en desarrollo
+                config.setJdbcUrl(DEV_DATABASE_URL);
+                System.out.println("Conectado al servidor de DESARROLLO");
+            }
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            // Fallback en caso de que no se pueda detectar la IP
+            config.setJdbcUrl(DEV_DATABASE_URL);  // Por defecto a desarrollo
+            System.out.println("Conectado al servidor de DESARROLLO (fallback)");
+        }
+
         config.setUsername(DATABASE_USER);
         config.setPassword(DATABASE_PASS);
         config.setMaximumPoolSize(30);  // Máximo de 30 conexiones simultáneas
@@ -55,40 +79,35 @@ public class AppUtils {
             dataSource.close();
         }
     }
-    
- // Convertir una cadena de texto en formato 'DD/MM/YYYY' a LocalDate
+
+    // Convertir una cadena de texto en formato 'DD/MM/YYYY' a LocalDate
     public static LocalDate convertirStringAFecha(String fecha) {
         try {
             if (fecha != null) {
-                // Usar DateTimeFormatter para manejar fechas en formato DD/MM/YYYY
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate date = LocalDate.parse(fecha, formatter);
-                return date;
+                return LocalDate.parse(fecha, formatter);
             } else {
                 return null;
             }
         } catch (DateTimeParseException e) {
-            logger.error("No se pudo parsear la fecha " + fecha + " " + e);
+            logger.error("No se pudo parsear la fecha " + fecha, e);
             return null;
         }
     }
-    
- // Convertir una cadena de texto en formato 'DD/MM/YYYY HH:mm:ss' a LocalDateTime (fecha y hora)
+
+    // Convertir una cadena de texto en formato 'DD/MM/YYYY HH:mm:ss' a LocalDateTime
     public static LocalDateTime convertirStringAFechaYHora(String fechaHora) {
         try {
             if (fechaHora != null) {
-                // Usar DateTimeFormatter para manejar fechas con hora en formato DD/MM/YYYY HH:mm:ss
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                LocalDateTime dateTime = LocalDateTime.parse(fechaHora, formatter);
-                return dateTime;
+                return LocalDateTime.parse(fechaHora, formatter);
             } else {
                 return null;
             }
         } catch (DateTimeParseException e) {
-            logger.error("No se pudo parsear la fecha y hora " + fechaHora + " " + e);
+            logger.error("No se pudo parsear la fecha y hora " + fechaHora, e);
             return null;
         }
     }
 }
-
 
