@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         //Base - Sistema Base
         resources.add(com.pablosrl.controllers.WsUsuario.class);
         resources.add(com.pablosrl.controllers.WsSucursales.class);
+        resources.add(com.pablosrl.controllers.WsMonedas.class);
          
         //Compras
         resources.add(com.pablosrl.controllers.compras.WsCondicionesCompra.class);
