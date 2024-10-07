@@ -1,6 +1,5 @@
 package com.pablosrl.service.stock;
 
-
 import com.pablosrl.data.stock.Articulos;
 import com.pablosrl.util.AppUtils;
 import java.sql.Connection;
@@ -13,16 +12,16 @@ import java.util.List;
 
 public class ArticulosService {
 
-    public List<Articulos> buscarArticulosPorCodigo(String filtro, int codEmpresa, int limit) {
+    public List<Articulos> buscarArticulos(String filtro, int codEmpresa, int limit) {
         List<Articulos> articulos = new ArrayList<>();
         String filtroUpper = filtro.toUpperCase(); // Convertir el filtro a mayúsculas antes de usarlo en la consulta
 
-        // Modificar la consulta para usar UPPER en la columna y el filtro
+        // Modificar la consulta para usar UPPER en las columnas 'cod_articulo' y 'descripcion'
         String sql = "SELECT a.cod_articulo, a.descripcion, trae_costo_prom(a.cod_empresa, a.cod_articulo, sysdate) as costo_promedio " +
                      "FROM st_articulos a " +
                      "WHERE a.cod_empresa = ? " +
                      "AND a.estado = 'A' " +
-                     "AND UPPER(a.cod_articulo) LIKE UPPER(?) " +  // Usar UPPER para hacer la comparación insensible a mayúsculas y minúsculas
+                     "AND (UPPER(a.cod_articulo) LIKE ? OR UPPER(a.descripcion) LIKE ?) " +  // Buscar en ambos, código y descripción
                      "ORDER BY a.cod_articulo ASC " +
                      "FETCH NEXT ? ROWS ONLY";
 
@@ -30,8 +29,9 @@ public class ArticulosService {
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setInt(1, codEmpresa);
-            stmt.setString(2, "%" + filtroUpper + "%");  // Pasar el filtro ya convertido en mayúsculas
-            stmt.setInt(3, limit);
+            stmt.setString(2, "%" + filtroUpper + "%");  // Filtro para el código de artículo
+            stmt.setString(3, "%" + filtroUpper + "%");  // Filtro para la descripción del artículo
+            stmt.setInt(4, limit);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

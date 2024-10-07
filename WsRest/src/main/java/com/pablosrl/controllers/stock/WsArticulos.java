@@ -28,7 +28,8 @@ public class WsArticulos {
             @PathParam("limit") int limit) {
         
         try {
-            List<Articulos> articulos = articulosService.buscarArticulosPorCodigo("", codEmpresa, limit);
+            // Asegúrate de que estás llamando al método correcto
+            List<Articulos> articulos = articulosService.buscarArticulos("", codEmpresa, limit);
             return articulos.isEmpty() ? 
                 Response.status(Response.Status.NO_CONTENT).build() :
                 Response.ok(articulos).build();
@@ -47,7 +48,8 @@ public class WsArticulos {
             @PathParam("limit") int limit) {
         
         try {
-            List<Articulos> articulos = articulosService.buscarArticulosPorCodigo(filtro, codEmpresa, limit);
+            // Asegúrate de que el nombre del método coincide con el definido en el servicio
+            List<Articulos> articulos = articulosService.buscarArticulos(filtro, codEmpresa, limit);
             return articulos.isEmpty() ?
                 Response.status(Response.Status.NO_CONTENT).build() :
                 Response.ok(articulos).build();
