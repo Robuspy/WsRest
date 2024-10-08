@@ -17,7 +17,7 @@ public class ArticulosService {
         String filtroUpper = filtro.toUpperCase(); // Convertir el filtro a mayúsculas antes de usarlo en la consulta
 
         // Modificar la consulta para usar UPPER en las columnas 'cod_articulo' y 'descripcion'
-        String sql = "SELECT a.cod_articulo, a.descripcion, trae_costo_prom(a.cod_empresa, a.cod_articulo, sysdate) as costo_promedio " +
+        String sql = "SELECT a.cod_articulo, a.descripcion, round(trae_costo_prom(a.cod_empresa, a.cod_articulo, sysdate)) as costo_promedio " +
                      "FROM st_articulos a " +
                      "WHERE a.cod_empresa = ? " +
                      "AND a.estado = 'A' " +
