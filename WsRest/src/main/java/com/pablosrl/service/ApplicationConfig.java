@@ -41,6 +41,7 @@ public class ApplicationConfig extends Application {
         
         //Stock
         resources.add(com.pablosrl.controllers.stock.WsArticulos.class);
+        resources.add(com.pablosrl.controllers.stock.WsLotes.class);
         
         
         
