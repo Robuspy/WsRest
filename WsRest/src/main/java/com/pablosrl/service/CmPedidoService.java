@@ -275,8 +275,6 @@ public class CmPedidoService {
         	
         	
             /*
-            
-            
             stmt.setInt(7, pedido.getNroComprobante());
             stmt.setDate(8, java.sql.Date.valueOf(pedido.getFecComprobante()));
             stmt.setString(9, pedido.getCodProveedor());
