@@ -65,7 +65,12 @@ public class CmPedidoService {
     // Método para obtener la cabecera de un pedido
     private PedidoCabecera obtenerCabeceraPedido(String codEmpresa, String tipComprobante, String serComprobante, String nroComprobante) {
         PedidoCabecera pedido = null;
-        String sql = "SELECT cod_empresa, cod_sucursal, tip_comprobante, ser_comprobante, nro_comprobante FROM cm_pedidos_cabecera WHERE COD_EMPRESA = ? AND TIP_COMPROBANTE = ? AND SER_COMPROBANTE = ? AND NRO_COMPROBANTE = ?";
+        String sql = "SELECT cod_empresa, cod_sucursal, tip_comprobante, ser_comprobante, nro_comprobante "
+        		   + "FROM cm_pedidos_cabecera "
+        		   + "WHERE COD_EMPRESA = ? "
+        		   + "AND TIP_COMPROBANTE = ? "
+        		   + "AND SER_COMPROBANTE = ? "
+        		   + "AND NRO_COMPROBANTE = ? ";
         
         try (Connection con = AppUtils.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -243,9 +248,11 @@ public class CmPedidoService {
         int nuevoNroComprobante = obtenerProximoNroComprobante(pedido.getCodEmpresa(), pedido.getTipComprobante(), pedido.getSerComprobante(), con);
         pedido.setNroComprobante(nuevoNroComprobante);
 
-        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, "
-        											+ "COD_SUCURSAL_PED, DESC_SUCURSAL_PED ) "
-                     + "VALUES (?, ?, ?, ?, ?,?,?)";
+        String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, " +
+									                  "COD_SUCURSAL_PED, DESC_SUCURSAL_PED, COD_MONEDA, TIP_CAMBIO, CAMBIO_MONEDA_PRECIO, " +
+									                  "COD_PROVEEDOR, COD_CONDICION_COMPRA, COD_CLIENTE, REFERENCIA) " +
+									                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
         	
@@ -257,6 +264,14 @@ public class CmPedidoService {
             
             stmt.setString(6, pedido.getCodSucursalPed());
             stmt.setString(7, pedido.getDescSucursalPed());
+            stmt.setString(8, pedido.getCodMoneda());
+            stmt.setBigDecimal(9, pedido.getTipCambio());
+            stmt.setBigDecimal(10, pedido.getCambioMonedaPrecio());
+
+            stmt.setString(11, pedido.getCodProveedor());
+            stmt.setString(12, pedido.getCodCondicionCompra());
+            stmt.setString(13, pedido.getCodCliente());
+            stmt.setString(14, pedido.getReferencia());
         	
         	
             /*
@@ -281,8 +296,9 @@ public class CmPedidoService {
 
     // Inserción del detalle del pedido con transacción
     public void insertarPedidoDetalle(PedidoDetalle detalle, Connection con) throws SQLException {
-        String sql = "INSERT INTO cm_pedidos_detalle (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, COD_ARTICULO) "
-                     + "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cm_pedidos_detalle (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, "
+        		                                   + "COD_ARTICULO, NRO_LOTE, CANTIDAD ) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, detalle.getCodEmpresa());
@@ -290,6 +306,9 @@ public class CmPedidoService {
             stmt.setString(3, detalle.getSerComprobante());
             stmt.setInt(4, detalle.getNroComprobante());
             stmt.setString(5, detalle.getCodArticulo());
+            stmt.setString(6, detalle.getNroLote());
+            stmt.setBigDecimal(7, detalle.getCantidad());
+            
             /*stmt.setBigDecimal(6, detalle.getCantidad());
             stmt.setBigDecimal(7, detalle.getPrecioUnitario());
             stmt.setBigDecimal(8, detalle.getMontoTotal());
