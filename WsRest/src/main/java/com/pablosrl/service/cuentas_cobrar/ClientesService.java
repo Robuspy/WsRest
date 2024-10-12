@@ -17,7 +17,8 @@ public class ClientesService {
 
         String sql = "SELECT c.COD_CLIENTE, c.nombre AS DESC_CLIENTE, c.ruc " +
                      "FROM cc_clientes c " +
-                     "WHERE c.ESTADO = 'A' " +
+                     "WHERE c.COD_EMPRESA = 1 " +
+                     "AND c.ESTADO = 'A' " +
                      "AND (UPPER(c.COD_CLIENTE) LIKE ? OR UPPER(c.nombre) LIKE ? OR UPPER(c.ruc) LIKE ?) " +
                      "ORDER BY c.COD_CLIENTE ASC " +
                      "FETCH NEXT ? ROWS ONLY";
