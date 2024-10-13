@@ -10,6 +10,10 @@ import org.apache.log4j.Logger;
 import com.pablosrl.dto.PedidoCompletoDTO;
 import com.pablosrl.service.CmPedidoService;
 
+import java.util.Map;
+import java.util.HashMap;
+
+
 @Path("/cmpedidos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -63,10 +67,12 @@ public class WsCmPedidos {
             String resultado = pedidoService.insertarPedidoCompleto(pedidoCompleto);
 
             if (resultado != null) {
-                return Response.status(Response.Status.CREATED).entity(resultado).build();  // Devolver el mensaje con el número de comprobante
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Pedido completo insertado correctamente. Número de comprobante: " + resultado);
+                return Response.status(Response.Status.CREATED).entity(response).build();  // Devolver el mensaje con el número de comprobante en formato JSON
             } else {
-            	logger.error("Error en la inserción del pedido completo: el servicio devolvió null o un resultado inesperado a.");
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo: resultado inesperado a").build();
+                logger.error("Error en la inserción del pedido completo: el servicio devolvió null o un resultado inesperado.");
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error insertando el pedido completo: resultado inesperado").build();
             }
 
         } catch (Exception e) {
