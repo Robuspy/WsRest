@@ -16,6 +16,9 @@ import com.pablosrl.data.cm_pedidos_compras.PedidoDetalle;
 import com.pablosrl.dto.PedidoCompletoDTO;
 import com.pablosrl.util.AppUtils;
 
+import java.sql.Date;
+
+
 @ApplicationScoped
 public class CmPedidoService {
 	
@@ -250,8 +253,8 @@ public class CmPedidoService {
 
         String sql = "INSERT INTO cm_pedidos_cabecera (COD_EMPRESA, COD_SUCURSAL, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, " +
 									                  "COD_SUCURSAL_PED, DESC_SUCURSAL_PED, COD_MONEDA, TIP_CAMBIO, CAMBIO_MONEDA_PRECIO, " +
-									                  "COD_PROVEEDOR, COD_CONDICION_COMPRA, COD_CLIENTE, REFERENCIA) " +
-									                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+									                  "COD_PROVEEDOR, COD_CONDICION_COMPRA, COD_CLIENTE, REFERENCIA, FEC_COMPROBANTE) " +
+									                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -272,6 +275,9 @@ public class CmPedidoService {
             stmt.setString(12, pedido.getCodCondicionCompra());
             stmt.setString(13, pedido.getCodCliente());
             stmt.setString(14, pedido.getReferencia());
+            
+         // Establecer la fecha actual para FEC_COMPROBANTE
+            stmt.setDate(15, new Date(System.currentTimeMillis()));
         	
         	
             /*
