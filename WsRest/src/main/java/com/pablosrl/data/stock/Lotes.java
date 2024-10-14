@@ -7,6 +7,7 @@ public class Lotes {
     private String nroLote;
     private String codTalle;
     private String descTalle;
+    private String codColor;
     private String descColor;
 
     // Constructor vacío
@@ -14,15 +15,18 @@ public class Lotes {
     }
 
     // Constructor con todos los atributos
-    public Lotes(String codArticulo, String nroLote, String codTalle, String descTalle, String descColor) {
+    public Lotes(String codArticulo, String nroLote, String codTalle, String descTalle, String codColor, String descColor) {
         this.codArticulo = codArticulo;
         this.nroLote = nroLote;
         this.codTalle = codTalle;
         this.descTalle = descTalle;
+        this.codColor = codColor;
         this.descColor = descColor;
     }
 
-    // Getters y setters
+
+
+	// Getters y setters
     public String getCodArticulo() {
         return codArticulo;
     }
@@ -62,4 +66,12 @@ public class Lotes {
     public void setDescColor(String descColor) {
         this.descColor = descColor;
     }
+    
+    public String getCodColor() {
+		return codColor;
+	}
+
+	public void setCodColor(String codColor) {
+		this.codColor = codColor;
+	}
 }

@@ -14,9 +14,10 @@ public class LotesService {
     public List<Lotes> buscarLotesPorArticulo(String codArticulo) {
         List<Lotes> lotes = new ArrayList<>();
 
-        String sql = "SELECT l.cod_articulo, l.nro_lote, l.cod_talle, l.desc_talle, l.desc_color " +
+        String sql = "SELECT l.cod_articulo, l.nro_lote, l.cod_talle, l.desc_talle, l.cod_color, l.desc_color  " +
                      "FROM STV_LOTES l " +
-                     "WHERE l.cod_articulo = ?";
+                     "WHERE l.cod_articulo = ? " +
+                     "ORDER BY l.cod_color, l.cod_talle ";
 
         try (Connection con = AppUtils.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -30,6 +31,7 @@ public class LotesService {
                     lote.setNroLote(rs.getString("nro_lote"));
                     lote.setCodTalle(rs.getString("cod_talle"));
                     lote.setDescTalle(rs.getString("desc_talle"));
+                    lote.setCodColor(rs.getString("cod_color"));
                     lote.setDescColor(rs.getString("desc_color"));
                     lotes.add(lote);
                 }
