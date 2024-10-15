@@ -300,23 +300,36 @@ public class CmPedidoService {
 
     // Inserción del detalle del pedido con transacción
     public void insertarPedidoDetalle(PedidoDetalle detalle, Connection con) throws SQLException {
-        String sql = "INSERT INTO cm_pedidos_detalle (COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, "
-        		                                   + "COD_ARTICULO, NRO_LOTE, CANTIDAD ) "
-                     + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
+    	
+    	detalle.setCantidadUb(detalle.getCantidad());
+    	
+    	String sql = "INSERT INTO cm_pedidos_detalle ("
+                + "COD_EMPRESA, TIP_COMPROBANTE, SER_COMPROBANTE, NRO_COMPROBANTE, NRO_ORDEN, "
+                + "COD_ARTICULO, DESC_ARTICULO, NRO_LOTE, CANTIDAD, CANTIDAD_UB, "
+                + "PRECIO_UNITARIO, MONTO_TOTAL, TOTAL_IVA, "
+                + "COD_UNIDAD_MEDIDA, PRECIO_UNITARIO_C_IVA, MONTO_TOTAL_C_IVA, "
+                + "PORC_IVA, PORC_GRAVADAS, MULT, DIV, MONTO_GRAVADAS, MONTO_EXENTAS, COD_IVA) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, '01', ?, ?, 0, 0, 1, 1, 0, 0, 0)";
 
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, detalle.getCodEmpresa());
-            stmt.setString(2, detalle.getTipComprobante());
-            stmt.setString(3, detalle.getSerComprobante());
-            stmt.setInt(4, detalle.getNroComprobante());
-            stmt.setString(5, detalle.getCodArticulo());
-            stmt.setString(6, detalle.getNroLote());
-            stmt.setBigDecimal(7, detalle.getCantidad());
+    	try (PreparedStatement stmt = con.prepareStatement(sql)) {
+    	    stmt.setString(1, detalle.getCodEmpresa());
+    	    stmt.setString(2, detalle.getTipComprobante());
+    	    stmt.setString(3, detalle.getSerComprobante());
+    	    stmt.setInt(4, detalle.getNroComprobante());
+    	    stmt.setInt(5, detalle.getNroOrden());
+    	    stmt.setString(6, detalle.getCodArticulo());
+    	    stmt.setString(7, detalle.getDescArticulo());
+    	    stmt.setString(8, detalle.getNroLote());
+    	    stmt.setBigDecimal(9, detalle.getCantidad());
+    	    stmt.setBigDecimal(10, detalle.getCantidadUb()); // Ahora igual a Cantidad
+    	    stmt.setBigDecimal(11, detalle.getPrecioUnitario());
+    	    stmt.setBigDecimal(12, detalle.getMontoTotal());
+    	    //stmt.setBigDecimal(13, detalle.getTotalIva());
+    	    stmt.setBigDecimal(14, detalle.getPrecioUnitarioCIVA()); // Asumiendo que se calcula antes de la inserción
+    	    stmt.setBigDecimal(15, detalle.getMontoTotalCIVA());     // Asumiendo que se calcula antes de la inserción
+
             
-            /*stmt.setBigDecimal(6, detalle.getCantidad());
-            stmt.setBigDecimal(7, detalle.getPrecioUnitario());
-            stmt.setBigDecimal(8, detalle.getMontoTotal());
-            stmt.setBigDecimal(9, detalle.getTotalIva());*/
+
 
             stmt.executeUpdate();
         }
