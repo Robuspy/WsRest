@@ -59,4 +59,26 @@ public class WsArticulos {
                     .entity("Error buscando artículos").build();
         }
     }
+    
+    
+    @GET
+    @Path("/buscarArticulo/{codEmpresa}/{filtro}")
+    public Response buscarArticulosExacto(
+            @PathParam("codEmpresa") int codEmpresa,
+            @PathParam("filtro") String filtro) {
+        
+        try {
+            List<Articulos> articulos = articulosService.buscarArticulosExacto(codEmpresa, filtro);
+            return articulos.isEmpty() ?
+                Response.status(Response.Status.NO_CONTENT).build() :
+                Response.ok(articulos).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error buscando artículos").build();
+        }
+    }
+    
+    
+    
 }

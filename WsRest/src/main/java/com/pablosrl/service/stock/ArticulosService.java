@@ -48,4 +48,42 @@ public class ArticulosService {
 
         return articulos;
     }
+    
+    
+    public List<Articulos> buscarArticulosExacto(int codEmpresa, String filtro) {
+        List<Articulos> articulos = new ArrayList<>();
+
+        // Convertir el filtro a mayúsculas para la comparación exacta con cod_articulo
+        String filtroUpper = filtro.toUpperCase();
+
+        // Consulta SQL modificada para filtrar solo por cod_articulo
+        String sql = "SELECT a.cod_articulo, a.descripcion, round(trae_costo_prom(a.cod_empresa, a.cod_articulo, sysdate)) as costo_promedio " +
+                     "FROM st_articulos a " +
+                     "WHERE a.cod_empresa = ? " +
+                     "AND a.estado = 'A' " +
+                     "AND UPPER(a.cod_articulo) = ?";
+
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, codEmpresa);
+            stmt.setString(2, filtroUpper);  // Filtro exacto para el código de artículo
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Articulos articulo = new Articulos();
+                    articulo.setCodArticulos(rs.getString("cod_articulo"));
+                    articulo.setDescArticulos(rs.getString("descripcion"));
+                    articulo.setCostoPromedioUnitario(rs.getBigDecimal("costo_promedio"));
+                    articulos.add(articulo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Manejo de errores
+        }
+
+        return articulos;
+    }
+    
+    
 }

@@ -1,114 +1,39 @@
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticuloRubro.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ArticuloFichaTemporada.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\util\AppUtils.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsTalonarios.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsSectorEcon.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsPlanillaCabecera.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\UnidadMedida.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsParametroGeneral.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsCaja.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PlanillaDetalle.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\Utils\UsuariosDAO.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PedidosCabecera.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PlanillaCabecera.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsPlanillaDetalle.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\SaldoClientes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsPlanillaCobranzaCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Clientes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\CajasCabecera.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Marca.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PedidosDetalle.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsExistencia.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsRelaciones.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsListaPrecioDet.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Recibos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsCondicionVenta.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Departamentos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsRecibos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsSucursales.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\util\StreamInbound.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PlanillaCobranzaDet.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Ciudades.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\ExampleService.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsSubTipoTrans.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\FormaCobro.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Linea.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsBancos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsMesas.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\Utils\PruebaConexion.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ListaPrecioDet.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Articulos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ClientesCv.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Monedas.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Imagenes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PedidosDistribucion.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\RecibosDetalle.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\TipoArticulo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\NoVenta.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsSaldoClientes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ArticuloFichaGrupo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsNoVenta.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticulosDetalle.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsChequesPendientes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsFamiliaArticulo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Bancos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ArticulosProCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\util\WebSocketServlet.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ChequesPendientes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Lotes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsImagenes_orig.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Relaciones.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticulosProCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsClientesCv.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsDepartamentos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Sucursales.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\Utils\Usuario.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsPedido.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsClientes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticulosProDet.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ArticuloFichaRubro.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsMonedas.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ListaPrecioCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsPersona.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ArticulosProDet.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsUnidadMedida.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\FamiliaArticulo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\CajasComprobantes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\Utils\Ejemplo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsTalles.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsPrecioEspMarca.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsRegistroId.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\ApplicationConfig.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsCiudades.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Mesas.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ParametrosGenerales.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\util\ParametrosProcedimiento.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticuloGrupo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Persona.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsSucursal.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsTipoArticulo.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticulos.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsUsuario.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ExistenciasArt.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsListaPrecioCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsSubTipoTransRec.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Usuarios.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticuloTemporada.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ArticuloDetalle.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticuloMarca.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsUbicacion.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\SectorEcon.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Talonarios.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\ListaPreciosCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsArticuloLinea.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\util\sendfile.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\CondicionVenta.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Talles.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PlanillaCobranzaCab.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsParametrosGenerales.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\Colores.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\SubTipoTrans.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\data\PrecioEspMarca.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsImagenes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsLotes.java
-J:\1- App Compras\WsRest\src\main\java\com\pablosrl\service\WsColores.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\stock\ArticulosService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\stock\WsLotes.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\base\SucursalesService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\Usuarios.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\util\WebSocketServlet.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\stock\LotesService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\MonedasService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\stock\Articulos.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\compras\WsCondicionesCompra.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\util\StreamInbound.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsUsuario.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\util\sendfile.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\Utils\UsuariosDAO.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\stock\Lotes.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\Sucursales.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\cuentas_cobrar\ClientesService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsMonedas.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\stock\WsArticulos.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\cm_pedidos_compras\PedidoCabecera.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\Utils\PruebaConexion.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsCmPedidos.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\dto\PedidoCompletoDTO.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\util\ParametrosProcedimiento.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsSucursales.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\ApplicationConfig.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\Monedas.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\cuentas_cobrar\WsClientes.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\Proveedores.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\cuentas_cobrar\Clientes.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\util\AppUtils.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\Utils\Usuario.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\cm_pedidos_compras\PedidoDetalle.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\compras\CondicionCompraService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\ExampleService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\compras\CondicionCompra.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsProveedores.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\ProveedoresService.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\Utils\Ejemplo.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\CmPedidoService.java
