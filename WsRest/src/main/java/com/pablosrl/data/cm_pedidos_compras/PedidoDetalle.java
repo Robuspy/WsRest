@@ -23,8 +23,9 @@ public class PedidoDetalle {
     
     private String codUnidadMedida;
     
-    private BigDecimal precioUnitarioCIVA;
-    private BigDecimal montoTotalCIVA;
+    private Integer precioUnitarioCIVA; // Precio unitario con IVA (adaptado a enteros)
+    private Integer montoTotalCIVA;     // Monto total con IVA (adaptado a enteros)
+    
     
     private BigDecimal porcIva;
     private BigDecimal porcGravadas;
@@ -122,18 +123,20 @@ public class PedidoDetalle {
 	public void setCodUnidadMedida(String codUnidadMedida) {
 		this.codUnidadMedida = codUnidadMedida;
 	}
-	public BigDecimal getPrecioUnitarioCIVA() {
-		return precioUnitarioCIVA;
-	}
-	public void setPrecioUnitarioCIVA(BigDecimal precioUnitarioCIVA) {
-		this.precioUnitarioCIVA = precioUnitarioCIVA;
-	}
-	public BigDecimal getMontoTotalCIVA() {
-		return montoTotalCIVA;
-	}
-	public void setMontoTotalCIVA(BigDecimal montoTotalCIVA) {
-		this.montoTotalCIVA = montoTotalCIVA;
-	}
+	public Integer getPrecioUnitarioCIVA() {
+        return precioUnitarioCIVA;
+    }
+
+    public void setPrecioUnitarioCIVA(Integer precioUnitarioCIVA) {
+        this.precioUnitarioCIVA = precioUnitarioCIVA;
+    }
+    public Integer getMontoTotalCIVA() {
+        return montoTotalCIVA;
+    }
+
+    public void setMontoTotalCIVA(Integer montoTotalCIVA) {
+        this.montoTotalCIVA = montoTotalCIVA;
+    }
 	public BigDecimal getPorcIva() {
 		return porcIva;
 	}
