@@ -25,10 +25,6 @@ public class AppUtils {
     public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo
     public static final String IMAGE_DIRECTORY_PROD = "\\\\192.168.0.56\\inventiva\\INVENTIVA\\EXE\\FOTOS_ARTICULOS\\"; // Producción
 
-    // Usuario y contraseña de la base de datos
-    private static final String DATABASE_USER = "inv";
-    private static final String DATABASE_PASS = "inv";
-
     // Configuración del pool de conexiones
     private static HikariDataSource dataSource;
 
@@ -51,6 +47,10 @@ public class AppUtils {
                 System.out.println("Conectado al servidor de DESARROLLO");
             }
 
+            // Credenciales por defecto para evitar excepciones en inicialización
+            config.setUsername("inv");
+            config.setPassword("inv");
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
             // Fallback en caso de que no se pueda detectar la IP
@@ -58,8 +58,6 @@ public class AppUtils {
             System.out.println("Conectado al servidor de DESARROLLO (fallback)");
         }
 
-        config.setUsername(DATABASE_USER);
-        config.setPassword(DATABASE_PASS);
         config.setMaximumPoolSize(30);  // Máximo de 30 conexiones simultáneas
         config.setMinimumIdle(10);      // Mínimo de conexiones inactivas en el pool
         config.setConnectionTimeout(30000);  // Tiempo de espera para obtener una conexión: 30 segundos
@@ -68,9 +66,47 @@ public class AppUtils {
         dataSource = new HikariDataSource(config);
     }
 
-    // Método para obtener una conexión desde el pool
+    // Método para obtener una conexión desde el pool con credenciales por defecto
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
+    }
+
+    // Nuevo método para obtener una conexión personalizada
+    public static Connection getConnection(String username, String password) throws SQLException {
+        HikariConfig dynamicConfig = new HikariConfig();
+
+        try {
+            // Detectar la IP del servidor donde está corriendo la aplicación
+            String serverIp = InetAddress.getLocalHost().getHostAddress();
+            System.out.println("IP del servidor detectada: " + serverIp);
+
+            // Configurar la URL de conexión según el entorno
+            if (serverIp.equals("192.168.0.56")) {
+                dynamicConfig.setJdbcUrl(PROD_DATABASE_URL);
+                System.out.println("Conectado al servidor de PRODUCCIÓN");
+            } else {
+                dynamicConfig.setJdbcUrl(DEV_DATABASE_URL);
+                System.out.println("Conectado al servidor de DESARROLLO");
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            dynamicConfig.setJdbcUrl(DEV_DATABASE_URL); // Fallback a desarrollo
+            System.out.println("Conectado al servidor de DESARROLLO (fallback)");
+        }
+
+        // Configurar las credenciales proporcionadas
+        dynamicConfig.setUsername(username);
+        dynamicConfig.setPassword(password);
+
+        // Validar la conexión antes de devolverla
+        try (HikariDataSource dynamicDataSource = new HikariDataSource(dynamicConfig)) {
+            Connection connection = dynamicDataSource.getConnection();
+            System.out.println("Usuario autenticado con éxito.");
+            return connection; // Devuelve la conexión válida
+        } catch (SQLException e) {
+            System.out.println("Error de autenticación: " + e.getMessage());
+            throw new SQLException("Usuario o contraseña incorrectos.");
+        }
     }
 
     // Método para cerrar el pool cuando la aplicación se cierre (opcional)
