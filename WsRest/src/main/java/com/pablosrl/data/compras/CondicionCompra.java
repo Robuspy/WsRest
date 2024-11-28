@@ -1,10 +1,10 @@
 package com.pablosrl.data.compras;
 
 public class CondicionCompra {
-	
+
 	private String codCondicionCompra;
     private String descCondicionCompra;
-    
+
 	public String getCodCondicionCompra() {
 		return codCondicionCompra;
 	}
@@ -17,6 +17,6 @@ public class CondicionCompra {
 	public void setDescCondicionCompra(String descCondicionCompra) {
 		this.descCondicionCompra = descCondicionCompra;
 	}
-    
-    
+
+
 }

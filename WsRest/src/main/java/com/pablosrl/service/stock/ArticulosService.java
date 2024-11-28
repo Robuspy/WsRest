@@ -1,14 +1,14 @@
 package com.pablosrl.service.stock;
 
-import com.pablosrl.data.stock.Articulos;
-import com.pablosrl.util.AppUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.pablosrl.data.stock.Articulos;
+import com.pablosrl.util.AppUtils;
 
 public class ArticulosService {
 
@@ -48,8 +48,8 @@ public class ArticulosService {
 
         return articulos;
     }
-    
-    
+
+
     public List<Articulos> buscarArticulosExacto(int codEmpresa, String filtro) {
         List<Articulos> articulos = new ArrayList<>();
 
@@ -84,6 +84,6 @@ public class ArticulosService {
 
         return articulos;
     }
-    
-    
+
+
 }

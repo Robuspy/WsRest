@@ -1,46 +1,46 @@
 package com.pablosrl.data;
 
 public class Usuarios {
-	
+
 	    private String codPersona;
 	    private String codUsuario;
 	    private String nombre;
 	    private String codGrupo;
-	    
+
 		    // Nuevas variables para dbUser y dbPass
 	private String dbUser;
 	private String dbPass;
-	
+
 	// Getters and Setters para codPersona, codUsuario, nombre, codGrupo
-	
+
 	public String getCodPersona() {
 	    return codPersona;
 	}
-	
+
 	public void setCodPersona(String codPersona) {
 	    this.codPersona = codPersona;
 	}
-	
+
 	public String getCodUsuario() {
 	    return codUsuario;
 	}
-	
+
 	public void setCodUsuario(String codUsuario) {
 	    this.codUsuario = codUsuario;
 	}
-	
+
 	public String getNombre() {
 	    return nombre;
 	}
-	
+
 	public void setNombre(String nombre) {
 	    this.nombre = nombre;
 	}
-	
+
 	public String getCodGrupo() {
 	    return codGrupo;
 	}
-	
+
 	public void setCodGrupo(String codGrupo) {
 	    this.codGrupo = codGrupo;
 	}

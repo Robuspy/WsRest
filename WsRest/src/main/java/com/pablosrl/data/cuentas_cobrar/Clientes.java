@@ -1,12 +1,12 @@
 package com.pablosrl.data.cuentas_cobrar;
 
 public class Clientes {
-	
+
     private String codCliente;
     private String descCliente;
     private String ruc;
-    
-    
+
+
 	public String getCodCliente() {
 		return codCliente;
 	}
@@ -25,8 +25,8 @@ public class Clientes {
 	public void setRuc(String ruc) {
 		this.ruc = ruc;
 	}
-    
-    
-    
+
+
+
 
 }

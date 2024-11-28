@@ -3,11 +3,11 @@ package com.pablosrl.data.stock;
 import java.math.BigDecimal;
 
 public class Articulos {
-	
+
 	private String codArticulos;
     private String descArticulos;
     private BigDecimal costoPromedioUnitario;
-    
+
 	public String getCodArticulos() {
 		return codArticulos;
 	}
@@ -26,8 +26,8 @@ public class Articulos {
 	public void setCostoPromedioUnitario(BigDecimal costoPromedioUnitario) {
 		this.costoPromedioUnitario = costoPromedioUnitario;
 	}
-    
-    
-    
+
+
+
 
 }

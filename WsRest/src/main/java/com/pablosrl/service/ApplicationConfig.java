@@ -26,31 +26,31 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         /*resources.add(com.pablosrl.service.WsAlerta.class);*/
-        
-        
+
+
         resources.add(com.pablosrl.controllers.ExampleService.class);
-        //Login - Iniciar 
+        //Login - Iniciar
         resources.add(com.pablosrl.controllers.AuthController.class);
         //Base - Sistema Base
         resources.add(com.pablosrl.controllers.WsUsuario.class);
         resources.add(com.pablosrl.controllers.WsSucursales.class);
         resources.add(com.pablosrl.controllers.WsMonedas.class);
-         
+
         //Compras
         resources.add(com.pablosrl.controllers.compras.WsCondicionesCompra.class);
         resources.add(com.pablosrl.controllers.WsProveedores.class);
         resources.add(com.pablosrl.controllers.WsCmPedidos.class);
-        
+
         //Stock
         resources.add(com.pablosrl.controllers.stock.WsArticulos.class);
         resources.add(com.pablosrl.controllers.stock.WsLotes.class);
-        
+
         //Cuentas a Cobrar
         resources.add(com.pablosrl.controllers.cuentas_cobrar.WsClientes.class);
-        
-        
-        
-        
+
+
+
+
     }
 
 

@@ -1,14 +1,20 @@
 package com.pablosrl.controllers.stock;
 
-import com.pablosrl.data.stock.Articulos;
-import com.pablosrl.service.stock.ArticulosService;
-import org.apache.log4j.Logger;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.pablosrl.data.stock.Articulos;
+import com.pablosrl.service.stock.ArticulosService;
 
 @Path("/articulos")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -26,11 +32,11 @@ public class WsArticulos {
             @PathParam("codEmpresa") int codEmpresa,
             @PathParam("offset") int offset,
             @PathParam("limit") int limit) {
-        
+
         try {
             // Asegúrate de que estás llamando al método correcto
             List<Articulos> articulos = articulosService.buscarArticulos("", codEmpresa, limit);
-            return articulos.isEmpty() ? 
+            return articulos.isEmpty() ?
                 Response.status(Response.Status.NO_CONTENT).build() :
                 Response.ok(articulos).build();
         } catch (Exception e) {
@@ -46,7 +52,7 @@ public class WsArticulos {
             @PathParam("codEmpresa") int codEmpresa,
             @PathParam("filtro") String filtro,
             @PathParam("limit") int limit) {
-        
+
         try {
             // Asegúrate de que el nombre del método coincide con el definido en el servicio
             List<Articulos> articulos = articulosService.buscarArticulos(filtro, codEmpresa, limit);
@@ -59,14 +65,14 @@ public class WsArticulos {
                     .entity("Error buscando artículos").build();
         }
     }
-    
-    
+
+
     @GET
     @Path("/buscarArticulo/{codEmpresa}/{filtro}")
     public Response buscarArticulosExacto(
             @PathParam("codEmpresa") int codEmpresa,
             @PathParam("filtro") String filtro) {
-        
+
         try {
             List<Articulos> articulos = articulosService.buscarArticulosExacto(codEmpresa, filtro);
             return articulos.isEmpty() ?
@@ -78,7 +84,7 @@ public class WsArticulos {
                     .entity("Error buscando artículos").build();
         }
     }
-    
-    
-    
+
+
+
 }

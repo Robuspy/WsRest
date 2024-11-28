@@ -8,37 +8,37 @@ public class PedidoDetalle {
     private String serComprobante;
     private Integer nroComprobante;
     private Integer nroOrden;
-    
+
     private String codArticulo;
     private String descArticulo;
     private String nroLote;
-    
+
     private BigDecimal cantidad;
     private BigDecimal cantidadUb;
-    
-    
+
+
     private BigDecimal precioUnitario;
     private BigDecimal montoTotal;
     private BigDecimal totalIva;
-    
+
     private String codUnidadMedida;
-    
+
     private Integer precioUnitarioCIVA; // Precio unitario con IVA (adaptado a enteros)
     private Integer montoTotalCIVA;     // Monto total con IVA (adaptado a enteros)
-    
-    
+
+
     private BigDecimal porcIva;
     private BigDecimal porcGravadas;
-    
+
     private BigDecimal mult;
     private BigDecimal div;
     private BigDecimal montoGravadas;
     private BigDecimal montoExentas;
     private String codIva;
-    
-    
-    
-    
+
+
+
+
 	public String getCodEmpresa() {
 		return codEmpresa;
 	}
@@ -178,13 +178,13 @@ public class PedidoDetalle {
 	}
 	public void setCodIva(String codIva) {
 		this.codIva = codIva;
-	} 
-    
- 
-    
-    
-    
-    
-    
+	}
+
+
+
+
+
+
+
 }
 

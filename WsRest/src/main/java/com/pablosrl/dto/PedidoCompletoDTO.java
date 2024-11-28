@@ -1,9 +1,9 @@
 package com.pablosrl.dto;
 
+import java.util.List;
+
 import com.pablosrl.data.cm_pedidos_compras.PedidoCabecera;
 import com.pablosrl.data.cm_pedidos_compras.PedidoDetalle;
-
-import java.util.List;
 
 public class PedidoCompletoDTO {
     private PedidoCabecera cabecera;

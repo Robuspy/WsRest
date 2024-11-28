@@ -1,14 +1,20 @@
 package com.pablosrl.controllers.cuentas_cobrar;
 
-import com.pablosrl.data.cuentas_cobrar.Clientes;
-import com.pablosrl.service.cuentas_cobrar.ClientesService;
-import org.apache.log4j.Logger;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.pablosrl.data.cuentas_cobrar.Clientes;
+import com.pablosrl.service.cuentas_cobrar.ClientesService;
 
 @Path("/clientes")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -27,7 +33,7 @@ public class WsClientes {
     public Response buscarClientes(
             @PathParam("filtro") String filtro,
             @PathParam("limit") int limit) {
-        
+
         try {
             List<Clientes> clientes = clientesService.buscarClientes(filtro, limit);
             if (clientes != null && !clientes.isEmpty()) {

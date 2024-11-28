@@ -1,7 +1,5 @@
 package com.pablosrl.data.stock;
 
-import java.math.BigDecimal;
-
 public class Lotes {
 	private String codArticulo;
     private String nroLote;
@@ -66,7 +64,7 @@ public class Lotes {
     public void setDescColor(String descColor) {
         this.descColor = descColor;
     }
-    
+
     public String getCodColor() {
 		return codColor;
 	}

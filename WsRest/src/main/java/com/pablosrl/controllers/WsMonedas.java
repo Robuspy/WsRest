@@ -1,5 +1,7 @@
 package com.pablosrl.controllers;
 
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -8,8 +10,6 @@ import javax.ws.rs.core.Response;
 
 import com.pablosrl.data.Monedas;
 import com.pablosrl.service.MonedasService;
-
-import java.util.List;
 
 @Path("/monedas")
 public class WsMonedas {

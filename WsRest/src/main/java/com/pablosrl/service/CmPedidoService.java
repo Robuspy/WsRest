@@ -1,7 +1,7 @@
 package com.pablosrl.service;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,12 +17,10 @@ import com.pablosrl.data.cm_pedidos_compras.PedidoDetalle;
 import com.pablosrl.dto.PedidoCompletoDTO;
 import com.pablosrl.util.AppUtils;
 
-import java.sql.Date;
-
 
 @ApplicationScoped
 public class CmPedidoService {
-	
+
 	// Inicialización del logger
     private static final Logger logger = Logger.getLogger(CmPedidoService.class);
 
@@ -50,7 +48,7 @@ public class CmPedidoService {
 
         // Obtener la cabecera del pedido
         PedidoCabecera cabecera = obtenerCabeceraPedido(codEmpresa, tipComprobante, serComprobante, nroComprobante);
-        
+
         // Si no hay cabecera, devolver null (el pedido no existe)
         if (cabecera == null) {
             return null;
@@ -58,7 +56,7 @@ public class CmPedidoService {
 
         // Obtener los detalles del pedido
         List<PedidoDetalle> detalles = obtenerDetallePedidos(codEmpresa, tipComprobante, serComprobante, nroComprobante);
-        
+
         // Establecer la cabecera y los detalles en el objeto DTO
         pedidoCompleto.setCabecera(cabecera);
         pedidoCompleto.setDetalles(detalles);
@@ -75,14 +73,14 @@ public class CmPedidoService {
         		   + "AND TIP_COMPROBANTE = ? "
         		   + "AND SER_COMPROBANTE = ? "
         		   + "AND NRO_COMPROBANTE = ? ";
-        
+
         try (Connection con = AppUtils.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, codEmpresa);
             stmt.setString(2, tipComprobante);
             stmt.setString(3, serComprobante);
             stmt.setString(4, nroComprobante);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     pedido = new PedidoCabecera();
@@ -91,7 +89,7 @@ public class CmPedidoService {
                     pedido.setTipComprobante(rs.getString("TIP_COMPROBANTE"));
                     pedido.setSerComprobante(rs.getString("SER_COMPROBANTE"));
                     pedido.setNroComprobante(rs.getInt("NRO_COMPROBANTE"));
-                    
+
                     /*pedido.setFecComprobante(rs.getDate("FEC_COMPROBANTE").toLocalDate());
                     pedido.setCodProveedor(rs.getString("COD_PROVEEDOR"));
                     pedido.setCodCondicionCompra(rs.getString("COD_CONDICION_COMPRA"));
@@ -142,7 +140,7 @@ public class CmPedidoService {
             stmt.setString(2, tipComprobante);
             stmt.setString(3, serComprobante);
             stmt.setString(4, nroComprobante);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     PedidoDetalle detalle = new PedidoDetalle();
@@ -157,17 +155,17 @@ public class CmPedidoService {
                     detalle.setCantidad(rs.getBigDecimal("CANTIDAD"));
                     detalle.setPrecioUnitario(rs.getBigDecimal("PRECIO_UNITARIO"));
                     detalle.setPrecioUnitarioCIVA(rs.getInt("PRECIO_UNITARIO_C_IVA"));
-                    detalle.setMontoTotal(rs.getBigDecimal("MONTO_TOTAL"));       
+                    detalle.setMontoTotal(rs.getBigDecimal("MONTO_TOTAL"));
                     detalle.setMontoTotalCIVA(rs.getInt("MONTO_TOTAL_C_IVA"));
-                    
-                    
+
+
                     /*
-                     * 
+                     *
                     detalle.setTotalIva(rs.getBigDecimal("TOTAL_IVA"));
                     detalle.setCodUnidadMedida(rs.getString("COD_UNIDAD_MEDIDA"));
                     detalle.setCantidadUb(rs.getBigDecimal("CANTIDAD_UB"));
-                    
-                    
+
+
                     detalle.setPorcIva(rs.getBigDecimal("PORC_IVA"));
                     detalle.setPorcGravadas(rs.getBigDecimal("PORC_GRAVADAS"));
                     detalle.setMult(rs.getBigDecimal("MULT"));
@@ -176,8 +174,8 @@ public class CmPedidoService {
                     detalle.setMontoExentas(rs.getBigDecimal("MONTO_EXENTAS"));
                     detalle.setCodIva(rs.getString("COD_IVA"));
                     detalle.setTotalPesoArt(rs.getBigDecimal("TOTAL_PESO_ART"));
-                    
-                    
+
+
                     */
                     detalles.add(detalle);
                 }
@@ -259,13 +257,13 @@ public class CmPedidoService {
 
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-        	
+
         	stmt.setString(1, pedido.getCodEmpresa());
             stmt.setString(2, pedido.getCodSucursal());
             stmt.setString(3, pedido.getTipComprobante());
             stmt.setString(4, pedido.getSerComprobante());
             stmt.setInt(5, pedido.getNroComprobante());
-            
+
             stmt.setString(6, pedido.getCodSucursalPed());
             stmt.setString(7, pedido.getDescSucursalPed());
             stmt.setString(8, pedido.getCodMoneda());
@@ -276,11 +274,11 @@ public class CmPedidoService {
             stmt.setString(12, pedido.getCodCondicionCompra());
             stmt.setString(13, pedido.getCodCliente());
             stmt.setString(14, pedido.getReferencia());
-            
+
          // Establecer la fecha actual para FEC_COMPROBANTE
             stmt.setDate(15, new Date(System.currentTimeMillis()));
-        	
-        	
+
+
             /*
             stmt.setInt(7, pedido.getNroComprobante());
             stmt.setDate(8, java.sql.Date.valueOf(pedido.getFecComprobante()));
@@ -299,10 +297,10 @@ public class CmPedidoService {
         }
     }
 
-    
+
     // Inserción del detalle del pedido con transacción
     public void insertarPedidoDetalle(PedidoDetalle detalle, Connection con) throws SQLException {
-    	
+
     	detalle.setCantidadUb(detalle.getCantidad());
 
     	/*
@@ -320,12 +318,12 @@ public class CmPedidoService {
     	        + "PRECIO_UNITARIO, "       // 11
     	        + "MONTO_TOTAL, "           // 12
     	        + "TOTAL_IVA, "             // 13
-    	        
+
     	        + "PRECIO_UNITARIO_C_IVA, " // 15
     	        + "MONTO_TOTAL_C_IVA, "     // 16
-    	        
-    	        
-    	        
+
+
+
     	        + ") "               // 23
     	        + "VALUES ("
     	        + "?,"  // 1 - COD_EMPRESA
@@ -351,9 +349,9 @@ public class CmPedidoService {
     	        + "0,"  // 21 - MONTO_GRAVADAS (valor fijo)
     	        + "0,"  // 22 - MONTO_EXENTAS (valor fijo)
     	        + "0)"; // 23 - COD_IVA (valor fijo)
-		
-    	 
-    	
+
+
+
     	*/
     	String sql = "INSERT INTO cm_pedidos_detalle ("
 	    	        + "COD_EMPRESA, "           // 1
@@ -397,10 +395,10 @@ public class CmPedidoService {
     	            + "1, " //18
     	            + "1, " //19
     	            + "1) "; //20
-    	
+
 
     	try (PreparedStatement stmt = con.prepareStatement(sql)) {
-    		
+
     		stmt.setString(1, detalle.getCodEmpresa());          // COD_EMPRESA
     	    stmt.setString(2, detalle.getTipComprobante());      // TIP_COMPROBANTE
     	    stmt.setString(3, detalle.getSerComprobante());      // SER_COMPROBANTE
@@ -416,8 +414,8 @@ public class CmPedidoService {
     	    stmt.setInt(13, detalle.getPrecioUnitarioCIVA()); // PRECIO_UNITARIO_C_IVA
     	    stmt.setInt(14, detalle.getMontoTotalCIVA());     // MONTO_TOTAL_C_IVA
 
-    	    
-    	    
+
+
     	    // Log para verificar los valores asignados
     	    //logger.info("PRECIO_UNITARIO_C_IVA: " + detalle.getPrecioUnitarioCIVA());
     	    //logger.info("MONTO_TOTAL_C_IVA: " + detalle.getMontoTotalCIVA());
@@ -425,8 +423,8 @@ public class CmPedidoService {
     	    // Ejecutar el INSERT
     	    stmt.executeUpdate();
     	    logger.info("Insert exitoso en cm_pedidos_detalle.");
-    		
-    		
+
+
     		/*
     	    // Configuración de valores según los índices enumerados
     	    stmt.setString(1, detalle.getCodEmpresa());          // COD_EMPRESA
@@ -441,7 +439,7 @@ public class CmPedidoService {
     	    stmt.setBigDecimal(10, detalle.getCantidadUb());     // CANTIDAD_UB
     	    stmt.setBigDecimal(11, detalle.getPrecioUnitario()); // PRECIO_UNITARIO
     	    stmt.setBigDecimal(12, detalle.getMontoTotal());     // MONTO_TOTAL
-    	    
+
     	    stmt.setInt(14, detalle.getPrecioUnitarioCIVA() != null ? detalle.getPrecioUnitarioCIVA() : 0); // PRECIO_UNITARIO_C_IVA
     	    stmt.setInt(15, detalle.getMontoTotalCIVA() != null ? detalle.getMontoTotalCIVA() : 0);         // MONTO_TOTAL_C_IVA
     	    stmt.setInt(16, 0);                                   // PORC_IVA (fijo en 0)
@@ -454,8 +452,8 @@ public class CmPedidoService {
 */
     	    //stmt.setBigDecimal(14, detalle.getPrecioUnitarioCIVA()); // PRECIO_UNITARIO_C_IVA
     	    //stmt.setBigDecimal(15, detalle.getMontoTotalCIVA());     // MONTO_TOTAL_C_IVA
-    	    
-    		
+
+
     		// Asignar valores al PreparedStatement y agregar logs para cada valor
     		 // Asignar valores a cada columna
     		/*
@@ -574,7 +572,7 @@ public class CmPedidoService {
             }
 			*/
 
-            
+
             /*
             stmt.setBigDecimal(17, detalle.getPorcIva());
             logger.info("17: PORC_IVA = " + detalle.getPorcIva());
@@ -596,7 +594,7 @@ public class CmPedidoService {
 
             stmt.setString(23, detalle.getCodIva());
             logger.info("23: COD_IVA = " + detalle.getCodIva());
-			
+
             // Ejecutar la consulta
             stmt.executeUpdate();
             logger.info("Insert ejecutado exitosamente para cm_pedidos_detalle.");*/

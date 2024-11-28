@@ -7,8 +7,8 @@ public class Monedas {
 	private String codMoneda;
     private String descMoneda;
     private BigDecimal tipoCambioDia;
-    
-    
+
+
 	public String getCodMoneda() {
 		return codMoneda;
 	}
@@ -27,8 +27,8 @@ public class Monedas {
 	public void setTipoCambioDia(BigDecimal tipoCambioDia) {
 		this.tipoCambioDia = tipoCambioDia;
 	}
-    
-    
 
-    
+
+
+
 }

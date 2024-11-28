@@ -1,48 +1,43 @@
 package com.pablosrl.data.cm_pedidos_compras;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-
-import com.pablosrl.util.AppUtils;
 
 //com.pablosrl.data.PedidoCabecera.java
 public class PedidoCabecera {
-	
+
 	private String codEmpresa;
     private String tipComprobante;
     private String serComprobante;
     private Integer  nroComprobante;  // NUMBER(8)
-    
+
     private String codMoneda;
     private BigDecimal tipCambio;
-    private BigDecimal cambioMonedaPrecio; 
-    
+    private BigDecimal cambioMonedaPrecio;
+
     private String codSucursal;
-    
+
     private String codSucursalPed;
     private String descSucursalPed;
-    
+
     private String codProveedor;
-    
+
     private String codCondicionCompra;
-    
+
     private String codCliente;
     private String referencia;
-    
-    
-    
-    
-    
+
+
+
+
+
     /*private LocalDate fecComprobante;
-     
+
     private BigDecimal totComprobante;  // NUMBER(18,3)
     private BigDecimal totGravadas;
     private BigDecimal totExentas;
     private BigDecimal totIva;
     private BigDecimal descuento;
-    
+
     private String verificadora;
     private String transporte;
     private String via;
@@ -64,12 +59,12 @@ public class PedidoCabecera {
     private String indRecibido;  // VARCHAR2(1) interpretado como String
     private String deposito;
     private Date fecLlegada;
-    
+
     private String entrega;
     private String etiqueta;
     private BigDecimal costoEtiqueta;  // NUMBER(10,3)
     */
-    
+
 	public String getCodEmpresa() {
 		return codEmpresa;
 	}
@@ -94,7 +89,7 @@ public class PedidoCabecera {
 	public void setNroComprobante(Integer  nroComprobante) {
 		this.nroComprobante = nroComprobante;
 	}
-	
+
 	public String getCodMoneda() {
 		return codMoneda;
 	}
@@ -113,7 +108,7 @@ public class PedidoCabecera {
 	public void setCambioMonedaPrecio(BigDecimal cambioMonedaPrecio) {
 		this.cambioMonedaPrecio = cambioMonedaPrecio;
 	}
-	
+
 
 	public String getCodSucursal() {
 		return codSucursal;
@@ -121,7 +116,7 @@ public class PedidoCabecera {
 	public void setCodSucursal(String codSucursal) {
 		this.codSucursal = codSucursal;
 	}
-	
+
 	public String getCodSucursalPed() {
 		return codSucursalPed;
 	}
@@ -131,40 +126,40 @@ public class PedidoCabecera {
 	public String getDescSucursalPed() {
 		return descSucursalPed;
 	}
-	
+
 	public void setDescSucursalPed(String descSucursalPed) {
 		this.descSucursalPed = descSucursalPed;
 	}
-	
+
 	public String getCodProveedor() {
 		return codProveedor;
 	}
 	public void setCodProveedor(String codProveedor) {
 		this.codProveedor = codProveedor;
 	}
-	
+
 	public String getCodCondicionCompra() {
 		return codCondicionCompra;
 	}
 	public void setCodCondicionCompra(String codCondicionCompra) {
 		this.codCondicionCompra = codCondicionCompra;
 	}
-	
+
 	public String getCodCliente() {
 		return codCliente;
 	}
-	
+
 	public void setCodCliente(String codCliente) {
 		this.codCliente = codCliente;
 	}
-	
+
 	public String getReferencia() {
 		return referencia;
 	}
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
 	}
-	
-	
-    
+
+
+
 }

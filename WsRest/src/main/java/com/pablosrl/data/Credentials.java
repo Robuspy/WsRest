@@ -3,7 +3,7 @@ package com.pablosrl.data;
 
 
 public class Credentials {
-	
+
     private String username;
     private String password;
 

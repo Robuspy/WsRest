@@ -4,8 +4,8 @@ public class Proveedores {
 
 	private String codProveedor;
     private String descProveedor;
-    
-    
+
+
 	public String getCodProveedor() {
 		return codProveedor;
 	}
@@ -20,5 +20,5 @@ public class Proveedores {
 	}
 
 
-    
+
 }

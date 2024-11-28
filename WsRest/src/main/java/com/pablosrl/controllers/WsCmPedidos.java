@@ -1,7 +1,15 @@
 package com.pablosrl.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -9,9 +17,6 @@ import org.apache.log4j.Logger;
 
 import com.pablosrl.dto.PedidoCompletoDTO;
 import com.pablosrl.service.CmPedidoService;
-
-import java.util.Map;
-import java.util.HashMap;
 
 
 @Path("/cmpedidos")
@@ -32,10 +37,10 @@ public class WsCmPedidos {
         @PathParam("tipComprobante") String tipComprobante,
         @PathParam("serComprobante") String serComprobante,
         @PathParam("nroComprobante") String nroComprobante) {
-        
+
         try {
             PedidoCompletoDTO pedidoCompleto = pedidoService.obtenerPedidoCompleto(codEmpresa, tipComprobante, serComprobante, nroComprobante);
-            
+
             // Si no se encuentra el pedido, devolver NO_CONTENT
             if (pedidoCompleto != null) {
                 return Response.ok(pedidoCompleto).build();  // Devolver el pedido completo, incluyendo campos con null

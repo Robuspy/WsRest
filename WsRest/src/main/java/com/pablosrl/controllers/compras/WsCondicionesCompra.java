@@ -1,14 +1,18 @@
 package com.pablosrl.controllers.compras;
 
-import com.pablosrl.data.compras.CondicionCompra;
-import com.pablosrl.service.compras.CondicionCompraService;
-import org.apache.log4j.Logger;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.pablosrl.data.compras.CondicionCompra;
+import com.pablosrl.service.compras.CondicionCompraService;
 
 @Path("/condiciones-compra")
 public class WsCondicionesCompra {
