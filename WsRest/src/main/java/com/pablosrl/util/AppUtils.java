@@ -23,7 +23,7 @@ public class AppUtils {
     //private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL";   // PRODUCCION
 
     // Ruta de imágenes
-    //public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo
+    public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo
     //public static final String IMAGE_DIRECTORY_PROD = "\\\\192.168.0.56\\inventiva\\INVENTIVA\\EXE\\FOTOS_ARTICULOS\\"; // Producción
     
     
@@ -42,8 +42,8 @@ public class AppUtils {
             config.setJdbcUrl(DATABASE_URL);
             // Credenciales por defecto para evitar excepciones en inicialización
             config.setUsername("inv");
-            config.setPassword("openinv");
-            //config.setPassword("inv"); parar desarrollo
+            //config.setPassword("openinv");
+            config.setPassword("inv"); //parar desarrollo
 
         } catch (Exception  e) {
             e.printStackTrace();

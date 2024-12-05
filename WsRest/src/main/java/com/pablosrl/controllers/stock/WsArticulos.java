@@ -1,5 +1,8 @@
 package com.pablosrl.controllers.stock;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.pablosrl.data.stock.Articulos;
 import com.pablosrl.service.stock.ArticulosService;
+import com.pablosrl.util.AppUtils;
 
 @Path("/articulos")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -84,6 +88,56 @@ public class WsArticulos {
                     .entity("Error buscando artículos").build();
         }
     }
+    
+    @GET
+    @Path("/imagen/{codArticulo}")
+    @Produces("image/*") // Soporta cualquier formato de imagen
+    public Response obtenerImagenArticulo(@PathParam("codArticulo") String codArticulo) {
+        try {
+            // Construir las posibles rutas de la imagen
+            String jpgPath = AppUtils.IMAGE_DIRECTORY_DEV + codArticulo + ".jpg";
+            String pngPath = AppUtils.IMAGE_DIRECTORY_DEV + codArticulo + ".png";
+
+            File imageFile = null;
+
+            // Verificar si existe el archivo .jpg
+            if (new File(jpgPath).exists()) {
+                imageFile = new File(jpgPath);
+            } 
+            // Si no, verificar si existe el archivo .png
+            else if (new File(pngPath).exists()) {
+                imageFile = new File(pngPath);
+            }
+
+            // Si no se encuentra el archivo
+            if (imageFile == null) {
+                logger.warn("Imagen no encontrada para el artículo: " + codArticulo);
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Imagen no encontrada para el artículo: " + codArticulo)
+                        .build();
+            }
+
+            // Leer el archivo de imagen
+            byte[] imageData = Files.readAllBytes(imageFile.toPath());
+
+            // Determinar el tipo MIME del archivo
+            String mimeType = Files.probeContentType(imageFile.toPath());
+
+            // Devolver la imagen como respuesta
+            return Response.ok(imageData).type(mimeType).build();
+
+        } catch (IOException e) {
+            logger.error("Error al obtener la imagen del artículo: " + codArticulo, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar la imagen del artículo: " + codArticulo).build();
+        } catch (Exception e) {
+            logger.error("Error inesperado al obtener la imagen del artículo: " + codArticulo, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error inesperado al obtener la imagen").build();
+        }
+    }
+
+
 
 
 
