@@ -16,7 +16,7 @@ public class ClientesService {
         List<Clientes> clientes = new ArrayList<>();
         String filtroUpper = filtro.toUpperCase(); // Convertir el filtro a mayúsculas antes de usarlo en la consulta
 
-        String sql = "SELECT c.COD_CLIENTE, c.nombre AS DESC_CLIENTE, c.ruc " +
+        String sql = "SELECT c.COD_CLIENTE, c.nombre AS DESC_CLIENTE, c.ruc, c.LIMITE_CREDITO " +
                      "FROM cc_clientes c " +
                      "WHERE c.COD_EMPRESA = 1 " +
                      "AND c.ESTADO = 'A' " +
@@ -38,6 +38,7 @@ public class ClientesService {
                     cliente.setCodCliente(rs.getString("COD_CLIENTE"));
                     cliente.setDescCliente(rs.getString("DESC_CLIENTE"));
                     cliente.setRuc(rs.getString("RUC"));
+                    cliente.setLimiteCredito(rs.getString("LIMITE_CREDITO"));
                     clientes.add(cliente);
                 }
             }

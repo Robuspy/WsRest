@@ -1,3 +1,4 @@
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\AuthResponse.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\stock\ArticulosService.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\stock\WsLotes.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\base\SucursalesService.java
@@ -19,7 +20,9 @@ C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\stock\W
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\cm_pedidos_compras\PedidoCabecera.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\Utils\PruebaConexion.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsCmPedidos.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\data\Credentials.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\dto\PedidoCompletoDTO.java
+C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\AuthController.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\util\ParametrosProcedimiento.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\controllers\WsSucursales.java
 C:\Users\RramoS\git\WsRest\WsRest\src\main\java\com\pablosrl\service\ApplicationConfig.java

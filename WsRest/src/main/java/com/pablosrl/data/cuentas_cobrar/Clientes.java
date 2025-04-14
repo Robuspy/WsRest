@@ -5,6 +5,7 @@ public class Clientes {
     private String codCliente;
     private String descCliente;
     private String ruc;
+    private String limiteCredito;
 
 
 	public String getCodCliente() {
@@ -26,6 +27,12 @@ public class Clientes {
 		this.ruc = ruc;
 	}
 
+	public String getLiminteCredito() {
+		return limiteCredito;
+	}
+	public void setLimiteCredito(String limiteCredito) {
+		this.limiteCredito = limiteCredito;
+	}
 
 
 
