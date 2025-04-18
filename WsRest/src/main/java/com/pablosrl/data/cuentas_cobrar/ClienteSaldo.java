@@ -1,5 +1,7 @@
 package com.pablosrl.data.cuentas_cobrar;
 
+import java.util.Date;
+
 public class ClienteSaldo {
 
 	private String codCliente;
@@ -12,6 +14,13 @@ public class ClienteSaldo {
     private String notasCredito;
     private String saldoTotal;
     private String mensaje;
+    
+    private String descPrecio;
+    private String descPlan;
+    private String descCondicionVenta;
+    private String descConsignacion;
+    private Date fechaUltCompra;
+    private String montoUltCompra;
     
     
 	public String getCodCliente() {
@@ -74,8 +83,45 @@ public class ClienteSaldo {
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
+	public String getDescPrecio() {
+		return descPrecio;
+	}
+	public void setDescPrecio(String descPrecio) {
+		this.descPrecio = descPrecio;
+	}
+	public String getDescPlan() {
+		return descPlan;
+	}
+	public void setDescPlan(String descPlan) {
+		this.descPlan = descPlan;
+	}
+	public String getDescCondicionVenta() {
+		return descCondicionVenta;
+	}
+	public void setDescCondicionVenta(String descCondicionVenta) {
+		this.descCondicionVenta = descCondicionVenta;
+	}
+	public String getDescConsignacion() {
+		return descConsignacion;
+	}
+	public void setDescConsignacion(String descConsignacion) {
+		this.descConsignacion = descConsignacion;
+	}
+	public Date getFechaUltCompra() {
+		return fechaUltCompra;
+	}
+	public void setFechaUltCompra(Date fechaUltCompra) {
+		this.fechaUltCompra = fechaUltCompra;
+	}
+	public String getMontoUltCompra() {
+		return montoUltCompra;
+	}
+	public void setMontoUltCompra(String montoUltCompra) {
+		this.montoUltCompra = montoUltCompra;
+	}
     
     
+
     
 
 }

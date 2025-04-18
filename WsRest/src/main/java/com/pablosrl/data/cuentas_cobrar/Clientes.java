@@ -1,11 +1,13 @@
 package com.pablosrl.data.cuentas_cobrar;
 
+
+
 public class Clientes {
 
     private String codCliente;
     private String descCliente;
     private String ruc;
-    private String limiteCredito;
+    private String limiteCredito; 
 
 
 	public String getCodCliente() {
@@ -33,7 +35,10 @@ public class Clientes {
 	public void setLimiteCredito(String limiteCredito) {
 		this.limiteCredito = limiteCredito;
 	}
+	
 
+	
+	
 
 
 }

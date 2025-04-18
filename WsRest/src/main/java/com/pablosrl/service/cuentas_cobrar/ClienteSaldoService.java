@@ -3,6 +3,8 @@ package com.pablosrl.service.cuentas_cobrar;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -38,8 +40,10 @@ public class ClienteSaldoService {
 
             stmt.execute();
 
-	         // Asignar valores al DTO desde los parámetros devueltos por el paquete
-	         clienteSaldo.setCodCliente(stmt.getString(2)); // ← importante: obtener valor real del paquete
+            String codClienteReal = stmt.getString(2);
+            
+          // Asignar datos base del paquete
+             clienteSaldo.setCodCliente(codClienteReal);
 	         clienteSaldo.setNombreCliente(stmt.getString(3));
 	         clienteSaldo.setSaldoGs(getBigDecimalAsString(stmt.getBigDecimal(4)));
 	         clienteSaldo.setLimiteCredito(getBigDecimalAsString(stmt.getBigDecimal(5)));
@@ -54,6 +58,40 @@ public class ClienteSaldoService {
             // Logs para depuración
             System.out.println("Consulta Paquete de Saldo del Cliente - Limites Creditos:");
             System.out.println("Cliente: " + codCliente + " - " + clienteSaldo.getNombreCliente());
+            
+            
+            // ▶ Segunda consulta adicional con el codCliente obtenido
+            String sqlInfoExtra = """
+                SELECT 
+                    DECODE(c.cod_lista_precio, '01', 'MAYORISTA', 'MINORISTA') AS desc_precio,
+                    trae_nombre_plan_categoria(c.cod_empresa, c.cod_categoria) AS desc_plan,
+                    trae_nombre_condiciones_ventas(c.cod_empresa, c.cod_condicion_venta) AS desc_condicion_venta,
+                    DECODE(c.ind_consignacion, 'N', 'NO', 'SI') AS desc_consignacion,
+                    trae_ult_fecha_compra_cliente(c.cod_empresa, null, null, null, c.cod_cliente) AS fecha_ult_compra,
+                    trae_ult_monto_compra_cliente(c.cod_empresa, c.cod_cliente) AS monto_ult_compra
+                FROM cc_clientes c
+                WHERE c.cod_empresa = ? AND c.cod_cliente = ?
+            """;
+
+            try (PreparedStatement ps = con.prepareStatement(sqlInfoExtra)) {
+                ps.setString(1, codEmpresa);
+                ps.setString(2, codClienteReal);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        clienteSaldo.setDescPrecio(rs.getString("desc_precio"));
+                        clienteSaldo.setDescPlan(rs.getString("desc_plan"));
+                        clienteSaldo.setDescCondicionVenta(rs.getString("desc_condicion_venta"));
+                        clienteSaldo.setDescConsignacion(rs.getString("desc_consignacion"));
+                        clienteSaldo.setFechaUltCompra(rs.getDate("fecha_ult_compra"));
+                        clienteSaldo.setMontoUltCompra(getBigDecimalAsString(rs.getBigDecimal("monto_ult_compra")));
+                    }
+                }
+            }
+
+            System.out.println("Consulta completa - Cliente: " + codClienteReal);
+            
+            
 
         } catch (SQLException e) {
             e.printStackTrace();
