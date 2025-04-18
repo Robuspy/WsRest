@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
+import com.pablosrl.data.MensajeRespuesta;
 import com.pablosrl.data.cuentas_cobrar.Clientes;
 import com.pablosrl.service.cuentas_cobrar.ClientesService;
 
@@ -56,11 +57,15 @@ public class WsClientes {
 
         try {
             String mensaje = clientesService.actualizarPrecioMayorista(codEmpresa, codCliente);
-            return Response.ok(mensaje).build();
+
+            // Retornar JSON bien formado
+            return Response.ok(new MensajeRespuesta(mensaje)).build();
+
         } catch (Exception e) {
             logger.error("Error al actualizar precio mayorista", e);
+
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Error al ejecutar procedimiento").build();
+                    .entity(new MensajeRespuesta("Error al ejecutar procedimiento")).build();
         }
     }
 
