@@ -47,4 +47,21 @@ public class WsClientes {
                     .entity("Error buscando clientes").build();
         }
     }
+    
+    @GET
+    @Path("/actualizar-precio/{codEmpresa}/{codCliente}")
+    public Response actualizarPrecioMayorista(
+            @PathParam("codEmpresa") String codEmpresa,
+            @PathParam("codCliente") String codCliente) {
+
+        try {
+            String mensaje = clientesService.actualizarPrecioMayorista(codEmpresa, codCliente);
+            return Response.ok(mensaje).build();
+        } catch (Exception e) {
+            logger.error("Error al actualizar precio mayorista", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al ejecutar procedimiento").build();
+        }
+    }
+
 }

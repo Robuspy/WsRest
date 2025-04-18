@@ -1,5 +1,6 @@
 package com.pablosrl.service.cuentas_cobrar;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,4 +49,30 @@ public class ClientesService {
 
         return clientes;
     }
+    
+    
+    public String actualizarPrecioMayorista(String codEmpresa, String codCliente) {
+        String mensaje = "";
+
+        String sql = "BEGIN actualiza_precio_mayorista(p_cod_empresa => ?, p_cod_cliente => ?, p_mensaje => ?); END;";
+
+        try (Connection con = AppUtils.getConnection();
+             CallableStatement stmt = con.prepareCall(sql)) {
+
+            stmt.setString(1, codEmpresa);
+            stmt.setString(2, codCliente);
+            stmt.registerOutParameter(3, java.sql.Types.VARCHAR);
+
+            stmt.execute();
+            mensaje = stmt.getString(3);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mensaje = "Error al ejecutar el procedimiento: " + e.getMessage();
+        }
+
+        return mensaje;
+    }
+    
+    
 }
