@@ -19,12 +19,12 @@ public class AppUtils {
     static Logger logger = Logger.getLogger(AppUtils.class);
 
     // URLs de conexión a la base de datos para desarrollo y producción
-    private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.100.225:1521:ORCL"; // DESARROLLO
-    //private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL";   // PRODUCCION
+    //private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.100.225:1521:ORCL"; // DESARROLLO
+    private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL";   // PRODUCCION
 
     // Ruta de imágenes
-    public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo
-    //public static final String IMAGE_DIRECTORY_PROD = "\\\\192.168.0.56\\inventiva\\INVENTIVA\\EXE\\FOTOS_ARTICULOS\\"; // Producción
+    //public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo
+    public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.0.56\\inventiva\\INVENTIVA\\EXE\\FOTOS_ARTICULOS\\"; // Producción
     
     
     
@@ -43,7 +43,7 @@ public class AppUtils {
             // Credenciales por defecto para evitar excepciones en inicialización
             config.setUsername("inv");
             //config.setPassword("openinv");
-            config.setPassword("inv"); //parar desarrollo
+            config.setPassword("openinv"); //parar desarrollo
 
         } catch (Exception  e) {
             e.printStackTrace();
