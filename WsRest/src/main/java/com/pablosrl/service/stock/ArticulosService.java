@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pablosrl.data.stock.Articulos;
+import com.pablosrl.data.stock.ArticulosExistencias;
 import com.pablosrl.util.AppUtils;
 
 public class ArticulosService {
@@ -84,6 +85,66 @@ public class ArticulosService {
 
         return articulos;
     }
+    
+    
+    public List<ArticulosExistencias> buscarArticulosConExistencia(int codEmpresa, String filtro, int offset, int limit) {
+        List<ArticulosExistencias> articulos = new ArrayList<>();
+        String filtroUpper = filtro != null ? filtro.toUpperCase() : "";
+
+        String sql = """
+            SELECT * FROM (
+                SELECT 
+                    a.cod_empresa,
+                    a.cod_articulo,
+                    a.descripcion AS desc_articulo,
+                    NVL(ee.cant_bloqueo, 0) AS cant_bloqueo,
+                    NVL(ee.cant_dispon, 0) AS cant_dispon,
+                    NVL(ee.cant_total, 0) AS cant_total,
+                    ROW_NUMBER() OVER (ORDER BY NVL(ee.cant_total, 0) DESC) AS rn
+                FROM st_articulos a
+                LEFT JOIN (
+                    SELECT 
+                        e.cod_empresa,
+                        e.cod_articulo,
+                        SUM(NVL(e.cant_bloqueo, 0)) AS cant_bloqueo,
+                        SUM(NVL(e.cant_dispon, 0)) AS cant_dispon,
+                        SUM(NVL(e.cant_bloqueo, 0) + NVL(e.cant_dispon, 0)) AS cant_total
+                    FROM st_existencia_art e
+                    GROUP BY e.cod_empresa, e.cod_articulo
+                ) ee ON ee.cod_empresa = a.cod_empresa AND ee.cod_articulo = a.cod_articulo
+                WHERE a.cod_empresa = ?
+                  AND (? IS NULL OR UPPER(a.cod_articulo) LIKE '%' || ? || '%' OR UPPER(a.descripcion) LIKE '%' || ? || '%')
+            ) WHERE rn BETWEEN ? AND ?
+        """;
+
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, codEmpresa);
+            stmt.setString(2, filtroUpper);
+            stmt.setString(3, filtroUpper);
+            stmt.setString(4, filtroUpper);
+            stmt.setInt(5, offset + 1);
+            stmt.setInt(6, offset + limit);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ArticulosExistencias articulo = new ArticulosExistencias(); 
+                    articulo.setCodArticulos(rs.getString("cod_articulo"));
+                    articulo.setDescArticulos(rs.getString("desc_articulo"));
+                    articulo.setCantBloqueo(rs.getBigDecimal("cant_bloqueo"));
+                    articulo.setCantDispon(rs.getBigDecimal("cant_dispon"));
+                    articulo.setCantTotal(rs.getBigDecimal("cant_total"));
+                    articulos.add(articulo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return articulos;
+    }
+    
 
 
 }

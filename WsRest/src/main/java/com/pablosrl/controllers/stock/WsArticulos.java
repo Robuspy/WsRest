@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import com.pablosrl.data.stock.Articulos;
+import com.pablosrl.data.stock.ArticulosExistencias;
 import com.pablosrl.service.stock.ArticulosService;
 import com.pablosrl.util.AppUtils;
 
@@ -138,7 +139,28 @@ public class WsArticulos {
     }
 
 
+    @GET
+    @Path("/buscar-existencias/{codEmpresa}/{filtro}/{offset}/{limit}")
+    public Response buscarArticulosConExistencia(
+            @PathParam("codEmpresa") int codEmpresa,
+            @PathParam("filtro") String filtro,
+            @PathParam("offset") int offset,
+            @PathParam("limit") int limit) {
 
+        try {
+            List<ArticulosExistencias> articulos = articulosService.buscarArticulosConExistencia(codEmpresa, filtro, offset, limit);
+            return articulos.isEmpty() ?
+                    Response.status(Response.Status.NO_CONTENT).build() :
+                    Response.ok(articulos).build();
 
+        } catch (Exception e) {
+            logger.error("Error buscando artículos con existencia", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error buscando artículos con existencia").build();
+        }
+    }
+
+    
+    
 
 }

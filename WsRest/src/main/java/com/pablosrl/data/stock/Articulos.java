@@ -7,6 +7,8 @@ public class Articulos {
 	private String codArticulos;
     private String descArticulos;
     private BigDecimal costoPromedioUnitario;
+    
+    
 
 	public String getCodArticulos() {
 		return codArticulos;
