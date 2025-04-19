@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
         /*resources.add(com.pablosrl.service.WsAlerta.class);*/
 
 
+    	resources.add(com.pablosrl.controllers.PingController.class);
         resources.add(com.pablosrl.controllers.ExampleService.class);
         //Login - Iniciar
         resources.add(com.pablosrl.controllers.AuthController.class);
