@@ -17,6 +17,7 @@ public class ArticulosExistencias {
     private BigDecimal cantBloqueo;
     private BigDecimal cantDispon;
     private BigDecimal cantTotal;
+    
     private BigDecimal precio01;
     private BigDecimal precio02;
     

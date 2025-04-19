@@ -137,6 +137,8 @@ public class ArticulosService {
                     articulo.setCantBloqueo(rs.getBigDecimal("cant_bloqueo"));
                     articulo.setCantDispon(rs.getBigDecimal("cant_dispon"));
                     articulo.setCantTotal(rs.getBigDecimal("cant_total"));
+                    articulo.setPrecio01(rs.getBigDecimal("precio_01")); 
+                    articulo.setPrecio02(rs.getBigDecimal("precio_02")); 
                     articulos.add(articulo);
                 }
             }
