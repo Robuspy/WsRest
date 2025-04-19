@@ -17,6 +17,8 @@ public class ArticulosExistencias {
     private BigDecimal cantBloqueo;
     private BigDecimal cantDispon;
     private BigDecimal cantTotal;
+    private BigDecimal precio01;
+    private BigDecimal precio02;
     
     
 	public String getCodEmpresa() {
@@ -96,6 +98,18 @@ public class ArticulosExistencias {
 	}
 	public void setCantTotal(BigDecimal cantTotal) {
 		this.cantTotal = cantTotal;
+	}
+	public BigDecimal getPrecio01() {
+		return precio01;
+	}
+	public void setPrecio01(BigDecimal precio01) {
+		this.precio01 = precio01;
+	}
+	public BigDecimal getPrecio02() {
+		return precio02;
+	}
+	public void setPrecio02(BigDecimal precio02) {
+		this.precio02 = precio02;
 	}
 
 

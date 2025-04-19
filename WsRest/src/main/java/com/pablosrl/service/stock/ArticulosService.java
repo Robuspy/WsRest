@@ -100,6 +100,8 @@ public class ArticulosService {
                     NVL(ee.cant_bloqueo, 0) AS cant_bloqueo,
                     NVL(ee.cant_dispon, 0) AS cant_dispon,
                     NVL(ee.cant_total, 0) AS cant_total,
+                    trae_precio_venta(a.cod_empresa, a.cod_articulo, SYSDATE, '01') precio_01,
+                    trae_precio_venta(a.cod_empresa, a.cod_articulo, SYSDATE, '02') precio_02,
                     ROW_NUMBER() OVER (ORDER BY NVL(ee.cant_total, 0) DESC) AS rn
                 FROM st_articulos a
                 LEFT JOIN (
