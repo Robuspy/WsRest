@@ -1,7 +1,6 @@
 package com.pablosrl.util;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
