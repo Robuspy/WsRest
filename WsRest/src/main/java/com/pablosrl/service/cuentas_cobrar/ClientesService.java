@@ -16,12 +16,17 @@ public class ClientesService {
     public List<Clientes> buscarClientes(String filtro, int limit) {
         List<Clientes> clientes = new ArrayList<>();
         String filtroUpper = filtro.toUpperCase(); // Convertir el filtro a mayúsculas antes de usarlo en la consulta
+        String filtroRucLimpio = filtroUpper.replace(".", "").replace(",", "").replace(" ", "");
 
         String sql = "SELECT c.COD_CLIENTE, c.nombre AS DESC_CLIENTE, c.ruc, c.LIMITE_CREDITO " +
                      "FROM cc_clientes c " +
                      "WHERE c.COD_EMPRESA = 1 " +
                      "AND c.ESTADO = 'A' " +
-                     "AND (UPPER(c.COD_CLIENTE) LIKE ? OR UPPER(c.nombre) LIKE ? OR UPPER(c.ruc) LIKE ?) " +
+                     "AND (" +
+                     "  UPPER(c.COD_CLIENTE) LIKE ? " +
+                     "  OR UPPER(c.nombre) LIKE ? " +
+                     "  OR REGEXP_REPLACE(UPPER(c.ruc), '[\\.,\\s]', '') LIKE ?" +
+                     ") " +
                      "ORDER BY c.COD_CLIENTE ASC " +
                      "FETCH NEXT ? ROWS ONLY";
 
@@ -30,7 +35,7 @@ public class ClientesService {
 
             stmt.setString(1, "%" + filtroUpper + "%");  // Filtro para el código del cliente
             stmt.setString(2, "%" + filtroUpper + "%");  // Filtro para la descripción del cliente
-            stmt.setString(3, "%" + filtroUpper + "%");  // Filtro para el RUC
+            stmt.setString(3, "%" + filtroRucLimpio + "%");  // Filtro por RUC limpio
             stmt.setInt(4, limit);
 
             try (ResultSet rs = stmt.executeQuery()) {
