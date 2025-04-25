@@ -1,11 +1,18 @@
 package com.pablosrl.service.stock;
 
+import java.awt.PageAttributes.MediaType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.enterprise.inject.Produces;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 import com.pablosrl.data.stock.Articulos;
 import com.pablosrl.data.stock.ArticulosExistencias;
@@ -148,6 +155,44 @@ public class ArticulosService {
 
         return articulos;
     }
+    
+    
+    public List<String> buscarCodigosArticulosConExistencia() {
+        List<String> codigosArticulos = new ArrayList<>();
+
+        String sql = "SELECT e.cod_empresa, " +
+                     "       e.cod_articulo, " +
+                     "       SUM(NVL(e.cant_dispon, 0)) AS cant_dispon " +
+                     "FROM st_existencia_art e " +
+                     "WHERE e.cod_empresa = 1 " +
+                     "  AND e.cod_articulo IS NOT NULL " +
+                     "  AND e.cant_dispon <> 0 " +
+                     "GROUP BY e.cod_empresa, e.cod_articulo " +
+                     "ORDER BY cant_dispon DESC";
+
+        try (Connection con = AppUtils.getConnection();
+                PreparedStatement stmt = con.prepareStatement(sql)) {
+
+       
+
+               try (ResultSet rs = stmt.executeQuery()) {
+                   while (rs.next()) {
+                       codigosArticulos.add(rs.getString("cod_articulo"));
+                   }
+               }
+           } catch (SQLException e) {
+               e.printStackTrace(); // Puedes cambiarlo por logger si lo deseas
+           }
+
+           return codigosArticulos;
+       }
+    
+    /*
+     * POST
+     * 
+     * **/
+    
+
     
 
 

@@ -3,14 +3,17 @@ package com.pablosrl.controllers.stock;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -137,6 +140,35 @@ public class WsArticulos {
                     .entity("Error inesperado al obtener la imagen").build();
         }
     }
+    
+    @GET
+    @Path("/imagenbase64/{codArticulo}")
+    @Produces(MediaType.TEXT_PLAIN) // Retorna texto plano (base64)
+    public Response obtenerImagenArticuloBase64(@PathParam("codArticulo") String codArticulo) {
+        try {
+            String jpgPath = AppUtils.IMAGE_DIRECTORY_DEV + codArticulo + ".jpg";
+            String pngPath = AppUtils.IMAGE_DIRECTORY_DEV + codArticulo + ".png";
+
+            File imageFile = null;
+            if (new File(jpgPath).exists()) imageFile = new File(jpgPath);
+            else if (new File(pngPath).exists()) imageFile = new File(pngPath);
+
+            if (imageFile == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Imagen no encontrada para el artículo: " + codArticulo)
+                        .build();
+            }
+
+            byte[] imageData = Files.readAllBytes(imageFile.toPath());
+            String base64Image = java.util.Base64.getEncoder().encodeToString(imageData);
+            return Response.ok(base64Image).build();
+
+        } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar la imagen del artículo: " + codArticulo).build();
+        }
+    }
+
 
 
     @GET
@@ -161,6 +193,50 @@ public class WsArticulos {
     }
 
     
+    
+    
+    @GET
+    @Path("/existentes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerCodigosArticulosConExistencia() {
+        try {
+            List<String> codigos = articulosService.buscarCodigosArticulosConExistencia();
+            return Response.ok(codigos).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                           .entity("Error al consultar códigos de artículos").build();
+        }
+    }
+    
+    /******
+     * 
+     * POST
+     * */
+    
+    @POST
+    @Path("/existentes/filtro")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerCodigosArticulosConExistenciaFiltrando(List<String> codigosLocales) {
+        try {
+            List<String> todos = articulosService.buscarCodigosArticulosConExistencia();
+            List<String> nuevos = new ArrayList<>();
+
+            for (String cod : todos) {
+                if (!codigosLocales.contains(cod)) {
+                    nuevos.add(cod);
+                }
+            }
+
+            return Response.ok(nuevos).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                           .entity("Error al filtrar códigos de artículos").build();
+        }
+    }
     
 
 }
