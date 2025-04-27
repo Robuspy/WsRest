@@ -19,7 +19,7 @@ public class AppUtils {
 
     // URLs de conexión a la base de datos para desarrollo y producción
     private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.100.225:1521:ORCL"; // DESARROLLO
-    //private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL";   // PRODUCCION
+    ///private static final String DATABASE_URL = "jdbc:oracle:thin:@192.168.0.56:1521:ORCL";   // PRODUCCION
 
     // Ruta de imágenes
     public static final String IMAGE_DIRECTORY_DEV = "\\\\192.168.100.225\\fotos_articulos\\"; // Desarrollo

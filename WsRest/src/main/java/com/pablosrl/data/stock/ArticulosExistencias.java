@@ -21,6 +21,8 @@ public class ArticulosExistencias {
     private BigDecimal precio01;
     private BigDecimal precio02;
     
+    private String tipoCompra;
+    
     
 	public String getCodEmpresa() {
 		return codEmpresa;
@@ -111,6 +113,12 @@ public class ArticulosExistencias {
 	}
 	public void setPrecio02(BigDecimal precio02) {
 		this.precio02 = precio02;
+	}
+	public String getTipoCompra() {
+		return tipoCompra;
+	}
+	public void setTipoCompra(String tipoCompra) {
+		this.tipoCompra = tipoCompra;
 	}
 
 

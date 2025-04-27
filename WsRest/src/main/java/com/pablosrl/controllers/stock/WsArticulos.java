@@ -172,25 +172,33 @@ public class WsArticulos {
 
 
     @GET
-    @Path("/buscar-existencias/{codEmpresa}/{filtro}/{offset}/{limit}")
+    @Path("/buscar-existencias/{codEmpresa}/{filtro}/{offset}/{limit}/{diasUltCompraDesde}/{diasUltCompraHasta}")
     public Response buscarArticulosConExistencia(
-            @PathParam("codEmpresa") int codEmpresa,
-            @PathParam("filtro") String filtro,
-            @PathParam("offset") int offset,
-            @PathParam("limit") int limit) {
+        @PathParam("codEmpresa") int codEmpresa,
+        @PathParam("filtro") String filtro,
+        @PathParam("offset") int offset,
+        @PathParam("limit") int limit,
+        @PathParam("diasUltCompraDesde") int diasUltCompraDesde,
+        @PathParam("diasUltCompraHasta") int diasUltCompraHasta,
+        @QueryParam("esNovedad") String esNovedad) {
 
         try {
-            List<ArticulosExistencias> articulos = articulosService.buscarArticulosConExistencia(codEmpresa, filtro, offset, limit);
-            return articulos.isEmpty() ?
-                    Response.status(Response.Status.NO_CONTENT).build() :
-                    Response.ok(articulos).build();
+            List<ArticulosExistencias> articulos = articulosService.buscarArticulosConExistencia(
+                    codEmpresa, filtro, offset, limit, diasUltCompraDesde, diasUltCompraHasta, esNovedad
+            );
+
+            if (articulos.isEmpty()) {
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
+            return Response.ok(articulos).build();
 
         } catch (Exception e) {
             logger.error("Error buscando artículos con existencia", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Error buscando artículos con existencia").build();
+                           .entity("Error buscando artículos con existencia").build();
         }
     }
+
 
     
     
