@@ -21,7 +21,11 @@ public class ClienteSaldo {
     private String descConsignacion;
     private Date fechaUltCompra;
     private String montoUltCompra;
+    private Date fec_venci_plan;
     
+ // Nuevo campo para las coordenadas en formato DMS
+    private String coordenadasMaps;
+
     
 	public String getCodCliente() {
 		return codCliente;
@@ -120,6 +124,20 @@ public class ClienteSaldo {
 		this.montoUltCompra = montoUltCompra;
 	}
     
+    public Date getFec_venci_plan() {
+		return fec_venci_plan;
+	}
+	public void setFec_venci_plan(Date fec_venci_plan) {
+		this.fec_venci_plan = fec_venci_plan;
+	}
+	
+    public String getCoordenadasMaps() {
+        return coordenadasMaps;
+    }
+
+    public void setCoordenadasMaps(String coordenadasMaps) {
+        this.coordenadasMaps = coordenadasMaps;
+    }
     
 
     

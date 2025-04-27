@@ -24,6 +24,8 @@ public class ArticulosExistencias {
     private String tipoCompra;
     
     
+    
+    
 	public String getCodEmpresa() {
 		return codEmpresa;
 	}

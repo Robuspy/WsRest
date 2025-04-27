@@ -68,7 +68,9 @@ public class ClienteSaldoService {
                     trae_nombre_condiciones_ventas(c.cod_empresa, c.cod_condicion_venta) AS desc_condicion_venta,
                     DECODE(c.ind_consignacion, 'N', 'NO', 'SI') AS desc_consignacion,
                     trae_ult_fecha_compra_cliente(c.cod_empresa, null, null, null, c.cod_cliente) AS fecha_ult_compra,
-                    trae_ult_monto_compra_cliente(c.cod_empresa, c.cod_cliente) AS monto_ult_compra
+                    trae_ult_monto_compra_cliente(c.cod_empresa, c.cod_cliente) AS monto_ult_compra,
+				    TRAE_FECHA_VENCI_PLAN(c.COD_EMPRESA, c.COD_CLIENTE, c.cod_categoria) fec_venci_plan, 
+				    c.coordenadas_maps
                 FROM cc_clientes c
                 WHERE c.cod_empresa = ? AND c.cod_cliente = ?
             """;
@@ -85,6 +87,8 @@ public class ClienteSaldoService {
                         clienteSaldo.setDescConsignacion(rs.getString("desc_consignacion"));
                         clienteSaldo.setFechaUltCompra(rs.getDate("fecha_ult_compra"));
                         clienteSaldo.setMontoUltCompra(getBigDecimalAsString(rs.getBigDecimal("monto_ult_compra")));
+                        clienteSaldo.setFec_venci_plan(rs.getDate("fec_venci_plan"));
+                        clienteSaldo.setCoordenadasMaps(rs.getString("coordenadas_maps"));
                     }
                 }
             }
