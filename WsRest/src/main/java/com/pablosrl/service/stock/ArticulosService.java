@@ -97,8 +97,17 @@ public class ArticulosService {
     public List<ArticulosExistencias> buscarArticulosConExistencia(int codEmpresa, String filtro, int offset, int limit,
             Integer diasUltCompraDesde, Integer diasUltCompraHasta,
             String esNovedad){
+    	
     	List<ArticulosExistencias> articulos = new ArrayList<>(); 
         List<Object> parametros = new ArrayList<>();
+        
+        if (filtro == null || filtro.trim().isEmpty() || filtro.trim().equalsIgnoreCase("null")) {
+            filtro = null;
+        }
+
+        if (esNovedad == null || esNovedad.trim().isEmpty() || esNovedad.trim().equalsIgnoreCase("null")) {
+            esNovedad = null;
+        }
 
         StringBuilder sql = new StringBuilder("""
                 SELECT * FROM (

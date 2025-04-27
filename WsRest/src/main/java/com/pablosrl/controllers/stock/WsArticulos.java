@@ -172,15 +172,16 @@ public class WsArticulos {
 
 
     @GET
-    @Path("/buscar-existencias/{codEmpresa}/{filtro}/{offset}/{limit}/{diasUltCompraDesde}/{diasUltCompraHasta}")
+    @Path("/buscar-existencias/{codEmpresa}/{offset}/{limit}/{diasUltCompraDesde}/{diasUltCompraHasta}")
     public Response buscarArticulosConExistencia(
         @PathParam("codEmpresa") int codEmpresa,
-        @PathParam("filtro") String filtro,
         @PathParam("offset") int offset,
         @PathParam("limit") int limit,
         @PathParam("diasUltCompraDesde") int diasUltCompraDesde,
         @PathParam("diasUltCompraHasta") int diasUltCompraHasta,
-        @QueryParam("esNovedad") String esNovedad) {
+        @QueryParam("filtro") String filtro,
+        @QueryParam("esNovedad") String esNovedad
+    ) {
 
         try {
             List<ArticulosExistencias> articulos = articulosService.buscarArticulosConExistencia(
@@ -198,6 +199,7 @@ public class WsArticulos {
                            .entity("Error buscando artículos con existencia").build();
         }
     }
+
 
 
     
