@@ -87,7 +87,7 @@ public class ClienteSaldoService {
                         clienteSaldo.setDescConsignacion(rs.getString("desc_consignacion"));
                         clienteSaldo.setFechaUltCompra(rs.getDate("fecha_ult_compra"));
                         clienteSaldo.setMontoUltCompra(getBigDecimalAsString(rs.getBigDecimal("monto_ult_compra")));
-                        clienteSaldo.setFec_venci_plan(rs.getDate("fec_venci_plan"));
+                        clienteSaldo.setFechaVenciPlan(rs.getDate("fec_venci_plan"));
                         clienteSaldo.setCoordenadasMaps(rs.getString("coordenadas_maps"));
                     }
                 }
