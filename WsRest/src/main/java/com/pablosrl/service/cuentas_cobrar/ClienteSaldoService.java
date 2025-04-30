@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pablosrl.data.cuentas_cobrar.ClienteSaldo;
 import com.pablosrl.util.AppUtils;
@@ -105,6 +107,106 @@ public class ClienteSaldoService {
         return clienteSaldo;
     }
 
+    
+    
+    public List<ClienteSaldo> buscarSaldosCliente(int codCliente, String tiposComprobante) {
+        List<ClienteSaldo> saldos = new ArrayList<>();
+
+        double totalSaldo = 0;
+        
+        boolean filtrarPorTipos = tiposComprobante != null && !tiposComprobante.trim().isEmpty();
+
+        String sql;
+        if (filtrarPorTipos) {
+            sql = 
+                "WITH tipos_lista AS ( " +
+                "  SELECT REGEXP_SUBSTR(?, '[^,]+', 1, LEVEL) AS tipo " +
+                "  FROM dual " +
+                "  CONNECT BY REGEXP_SUBSTR(?, '[^,]+', 1, LEVEL) IS NOT NULL " +
+                ") " +
+                "SELECT s.cod_empresa, " +
+                "       s.cod_cliente, " +
+                "       trae_nombre_cliente(s.cod_empresa, s.cod_cliente) AS desc_cliente, " +
+                "       s.tipo_comprobante, " +
+                "       t.descripcion AS desc_comprobante, " +
+                "       s.nro_comprobante, " +
+                "       s.fec_origen, " +
+                "       s.fec_vencimiento, " +
+                "       s.monto_cuota AS monto_comprobante, " +
+                "       s.saldo_cuota " +
+                "FROM cc_saldos s " +
+                "LEFT JOIN tipos_comprobantes t " +
+                "  ON s.cod_empresa = t.cod_empresa " +
+                " AND s.tipo_comprobante = t.tip_comprobante " +
+                "JOIN tipos_lista l " +
+                "  ON l.tipo = s.tipo_comprobante " +
+                "WHERE s.cod_empresa = 1 " +
+                "AND s.cod_cliente = ? " +
+                "AND NVL(s.saldo_cuota, 0) <> 0 " +
+                "ORDER BY s.tipo_comprobante, s.fec_vencimiento DESC";
+        } else {
+            sql = 
+                "SELECT s.cod_empresa, " +
+                "       s.cod_cliente, " +
+                "       trae_nombre_cliente(s.cod_empresa, s.cod_cliente) AS desc_cliente, " +
+                "       s.tipo_comprobante, " +
+                "       t.descripcion AS desc_comprobante, " +
+                "       s.nro_comprobante, " +
+                "       s.fec_origen, " +
+                "       s.fec_vencimiento, " +
+                "       s.monto_cuota AS monto_comprobante, " +
+                "       s.saldo_cuota " +
+                "FROM cc_saldos s " +
+                "LEFT JOIN tipos_comprobantes t " +
+                "  ON s.cod_empresa = t.cod_empresa " +
+                " AND s.tipo_comprobante = t.tip_comprobante " +
+                "WHERE s.cod_empresa = 1 " +
+                "AND s.cod_cliente = ? " +
+                "AND NVL(s.saldo_cuota, 0) <> 0 " +
+                "ORDER BY s.tipo_comprobante, s.fec_vencimiento DESC";
+        }
+
+        try (Connection con = AppUtils.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            if (filtrarPorTipos) {
+                stmt.setString(1, tiposComprobante.toUpperCase());
+                stmt.setString(2, tiposComprobante.toUpperCase());
+                stmt.setInt(3, codCliente);
+            } else {
+                stmt.setInt(1, codCliente);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                	ClienteSaldo saldo = new ClienteSaldo();
+                    saldo.setCodCliente(rs.getString("cod_cliente"));
+                    saldo.setNombreCliente(rs.getString("desc_cliente"));
+                    saldo.setTipoComprobante(rs.getString("tipo_comprobante"));
+                    saldo.setDesComprobante(rs.getString("desc_comprobante"));
+                    saldo.setNroComprobante(rs.getString("nro_comprobante"));
+                    saldo.setFecOrigen(rs.getDate("fec_origen"));
+                    saldo.setFecVencimiento(rs.getDate("fec_vencimiento"));
+                    saldo.setMontoComprobante(rs.getDouble("monto_comprobante"));
+                    saldo.setSaldoCuota(rs.getDouble("saldo_cuota"));
+                    
+                    totalSaldo += saldo.getSaldoCuota(); // ⬅️ Acumulás aquí
+                    saldos.add(saldo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return saldos;
+    }
+
+    
+    
+    
+    
+    
+    
     private String getBigDecimalAsString(BigDecimal value) {
         return value != null ? value.toPlainString() : "0";
     }

@@ -49,6 +49,8 @@ public class ApplicationConfig extends Application {
         //Cuentas a Cobrar
         resources.add(com.pablosrl.controllers.cuentas_cobrar.WsClientes.class);
         resources.add(com.pablosrl.controllers.cuentas_cobrar.WsClienteSaldo.class);
+        
+        //Generar PDF
 
 
 

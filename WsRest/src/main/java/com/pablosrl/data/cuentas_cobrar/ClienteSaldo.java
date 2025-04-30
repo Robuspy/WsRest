@@ -23,6 +23,17 @@ public class ClienteSaldo {
     private String montoUltCompra;
     private Date fechaVenciPlan;
     private String coordenadasMaps;
+    
+    
+    private String tipoComprobante;
+    private String desComprobante;
+    private String nroComprobante;
+    private Date fecOrigen;
+    private Date fecVencimiento;
+    private Double montoComprobante;
+    private Double saldoCuota;
+    
+    
 
     
 	public String getCodCliente() {
@@ -136,6 +147,50 @@ public class ClienteSaldo {
     public void setCoordenadasMaps(String coordenadasMaps) {
         this.coordenadasMaps = coordenadasMaps;
     }
+	public String getTipoComprobante() {
+		return tipoComprobante;
+	}
+	public void setTipoComprobante(String tipoComprobante) {
+		this.tipoComprobante = tipoComprobante;
+	}
+	public String getDesComprobante() {
+		return desComprobante;
+	}
+	public void setDesComprobante(String desComprobante) {
+		this.desComprobante = desComprobante;
+	}
+	public String getNroComprobante() {
+		return nroComprobante;
+	}
+	public void setNroComprobante(String nroComprobante) {
+		this.nroComprobante = nroComprobante;
+	}
+	public Date getFecOrigen() {
+		return fecOrigen;
+	}
+	public void setFecOrigen(Date fecOrigen) {
+		this.fecOrigen = fecOrigen;
+	}
+	public Date getFecVencimiento() {
+		return fecVencimiento;
+	}
+	public void setFecVencimiento(Date fecVencimiento) {
+		this.fecVencimiento = fecVencimiento;
+	}
+	public Double getMontoComprobante() {
+		return montoComprobante;
+	}
+	public void setMontoComprobante(Double montoComprobante) {
+		this.montoComprobante = montoComprobante;
+	}
+	public Double getSaldoCuota() {
+		return saldoCuota;
+	}
+	public void setSaldoCuota(Double saldoCuota) {
+		this.saldoCuota = saldoCuota;
+	}
+    
+    
     
 
     
