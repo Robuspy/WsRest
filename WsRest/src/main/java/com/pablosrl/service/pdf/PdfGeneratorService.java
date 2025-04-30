@@ -8,7 +8,7 @@ import com.pablosrl.data.cuentas_cobrar.ClienteSaldo;
 import javax.enterprise.context.ApplicationScoped;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @ApplicationScoped
@@ -21,8 +21,8 @@ public class PdfGeneratorService {
 
         ClienteSaldo cliente = saldos.get(0); // Usamos el primero para datos generales
         double totalSaldo = saldos.stream()
-        	    .mapToDouble(ClienteSaldo::getSaldoCuota)
-        	    .sum();
+                .mapToDouble(ClienteSaldo::getSaldoCuota)
+                .sum();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document doc = new Document(PageSize.A4, 36, 36, 50, 36);
@@ -33,12 +33,14 @@ public class PdfGeneratorService {
         Font bold = new Font(Font.HELVETICA, 12, Font.BOLD);
         Font normal = new Font(Font.HELVETICA, 11);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         doc.add(new Paragraph("PABLO SRL - Estado de Cuenta del Cliente", titleFont));
         doc.add(new Paragraph(" "));
 
         doc.add(new Paragraph("Código Cliente: " + cliente.getCodCliente(), normal));
         doc.add(new Paragraph("Nombre: " + cliente.getNombreCliente(), normal));
-        doc.add(new Paragraph("Fecha de Emisión: " + LocalDate.now(), normal));
+        doc.add(new Paragraph("Fecha de Emisión: " + sdf.format(new java.util.Date()), normal));
         doc.add(new Paragraph(" "));
 
         PdfPTable table = new PdfPTable(6);
@@ -55,17 +57,17 @@ public class PdfGeneratorService {
         for (ClienteSaldo s : saldos) {
             table.addCell(new Phrase(s.getTipoComprobante(), normal));
             table.addCell(new Phrase(s.getNroComprobante(), normal));
-            table.addCell(new Phrase(s.getFecOrigen().toString(), normal));
-            table.addCell(new Phrase(s.getFecVencimiento().toString(), normal));
+            table.addCell(new Phrase(s.getFecOrigen() != null ? sdf.format(s.getFecOrigen()) : "", normal));
+            table.addCell(new Phrase(s.getFecVencimiento() != null ? sdf.format(s.getFecVencimiento()) : "", normal));
             table.addCell(new Phrase(String.format("%,.0f", s.getMontoComprobante()), normal));
             table.addCell(new Phrase(String.format("%,.0f", s.getSaldoCuota()), normal));
         }
 
         doc.add(table);
-        
+
         Paragraph total = new Paragraph("Total Saldo Pendiente: Gs. " + String.format("%,.0f", totalSaldo), bold);
         total.setSpacingBefore(10f);
-        
+
         doc.add(total);
         doc.add(new Paragraph(" "));
         doc.add(new Paragraph("Documento generado automáticamente. No válido como factura.", normal));
@@ -73,4 +75,5 @@ public class PdfGeneratorService {
 
         return baos.toByteArray();
     }
-} 
+}
+
